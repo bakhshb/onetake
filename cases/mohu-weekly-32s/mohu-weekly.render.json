@@ -1,0 +1,26 @@
+{
+ "comp": "/home/user/onetake/cases/mohu-weekly-32s/comp.html",
+ "fps": 30,
+ "scale": 1,
+ "size": [
+  1080,
+  1920
+ ],
+ "shutter": 180.0,
+ "samples": "adaptive",
+ "gap_px": 16.0,
+ "samples_per_moving_frame": {
+  "4": 224,
+  "5": 11,
+  "6": 8,
+  "7": 6,
+  "8": 304
+ },
+ "workers": 4,
+ "frames": 1020,
+ "still_frames": 467,
+ "cut_frames": 55,
+ "captures": 4407,
+ "seconds": 555.3,
+ "final": false
+}
