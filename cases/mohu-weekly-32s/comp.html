@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<!-- onetake · PolyForm Noncommercial 1.0.0 · lineage otk-7f3e1c
+     Weekly achievement report (5 Nov 2026) — one take carried by a single eight-pointed star (khatam).
+     Data, colours and section order come from the report PDF; see README.md. -->
+<html lang="ar" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>تقرير الإنجاز الأسبوعي · onetake</title>
+<link rel="stylesheet" href="faces.css">
+<style>
+:root{
+  --black:#0b0a09; --gold:#d9a86a; --gold2:#b8894e; --cream:#fbf7f4; --card:#ffffff; --line:#e9e3dc; --mute:#8d8780; --ink:#141414;
+  --navy:#174766; --green:#038060; --brown:#87452b; --grey:#a6a6a6;
+}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--black)}
+body{font-family:'Plex',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.L{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.W{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0}
+.a{position:absolute;left:0!important;top:0!important;direction:rtl;will-change:transform,opacity}
+canvas.L{display:block}
+#cream{overflow:hidden}
+.card{background:var(--card);border-radius:28px;box-shadow:0 2px 0 rgba(60,40,20,.04),0 18px 40px -22px rgba(70,50,20,.25)}
+.tab{height:96px;border-radius:24px;background:#dcdcdc;color:#fff;font-size:29px;font-weight:500;display:flex;align-items:center;justify-content:center;white-space:nowrap}
+#pill{border-radius:24px;box-shadow:0 14px 26px -14px rgba(0,0,0,.45)}
+.ptxt{font-size:31px;font-weight:700;color:#fff;white-space:nowrap;text-align:center;line-height:96px}
+.num{font-weight:700;direction:ltr;unicode-bidi:isolate;white-space:nowrap;text-align:center;line-height:1}
+.lbl{font-size:29px;font-weight:500;white-space:nowrap;text-align:center}
+.rowlbl{font-size:25px;font-weight:500;color:#2a2a2a;white-space:nowrap;text-align:right;transform-origin:100% 50%}
+.seg{height:46px;top:0}
+.segn{font-size:21px;font-weight:500;color:#fff;direction:ltr;text-align:center;line-height:46px;white-space:nowrap}
+.hd{font-size:31px;font-weight:700;white-space:nowrap}
+.leg{font-size:21px;font-weight:500;color:#555;white-space:nowrap;display:flex;gap:22px;align-items:center;direction:rtl}
+.leg i{display:inline-block;width:16px;height:16px;border-radius:4px;margin-left:8px;vertical-align:-2px}
+.ft{width:900px;text-align:right}
+.ft b{display:block;font-size:30px;margin-bottom:12px}
+.ft p{margin:0;font-size:25px;line-height:1.55;color:#333}
+#title{font-size:86px;font-weight:700;color:#fff;white-space:nowrap}
+#title span{display:inline-block;margin:0 .12em}
+.gold{color:var(--gold)}
+</style>
+</head>
+<body>
+<!-- 1 · the black ground: Kiswa black, a gold girih lattice farther back -->
+<canvas id="gDark" class="L" width="1080" height="1920"></canvas>
+<div id="dark" class="W">
+  <div id="title" class="a"><span>تقرير</span><span>الإنجاز</span><span>الأسبوعي</span></div>
+  <div id="date" class="a num gold" style="font-size:50px;font-weight:700;direction:rtl">5 نوفمبر 2026</div>
+  <div id="rule" class="a" style="height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)"></div>
+  <div id="org" class="a" style="font-size:34px;font-weight:500;color:#cdbfa9;white-space:nowrap">وزارة الحج والعمرة</div>
+  <div id="thanks" class="a" style="font-family:'Amiri';font-size:132px;font-weight:700;color:#fff;white-space:nowrap">شكراً لكم</div>
+  <div id="org2" class="a gold" style="font-size:40px;font-weight:700;white-space:nowrap">وزارة الحج والعمرة</div>
+  <div id="sub2" class="a" style="font-size:30px;font-weight:500;color:#cdbfa9;white-space:nowrap">تقرير الإنجاز الأسبوعي · 5 نوفمبر 2026</div>
+</div>
+<!-- 2 · the report's cream page, opened by an iris from the star -->
+<div id="cream" class="L">
+  <canvas id="gLight" class="L" width="1080" height="1920"></canvas>
+  <div id="world" class="W"></div>
+  <div id="band" class="a" style="left:0;top:1872px;width:1080px;height:48px"></div>
+</div>
+<!-- 3 · the star (always on top: it is the carrier) -->
+<div id="top" class="W">
+  <svg id="svg" class="a" width="1080" height="1920" viewBox="0 0 1080 1920" style="overflow:visible">
+    <defs>
+      <radialGradient id="gfill" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#2a2016"/><stop offset="1" stop-color="#0f0c09"/></radialGradient>
+    </defs>
+    <g id="rings"></g>
+    <g id="star">
+      <path id="sFill" fill="url(#gfill)"/>
+      <path id="sFillW" fill="#fff"/>
+      <path id="sqA" fill="none" stroke="#d9a86a" stroke-width="4" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1 1"/>
+      <path id="sqB" fill="none" stroke="#d9a86a" stroke-width="4" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1 1"/>
+      <circle id="sIn" r="0" fill="none" stroke="#d9a86a" stroke-width="2" pathLength="1" stroke-dasharray="1 1"/>
+      <circle id="seed" r="7" fill="#d9a86a"/>
+    </g>
+  </svg>
+  <div id="snum" class="a num gold" style="font-size:94px"></div>
+  <div id="stxt" class="a gold" style="font-size:27px;font-weight:700;text-align:center;line-height:1.25;white-space:nowrap">التجربة<br>الرقمية</div>
+</div>
+
+<script src="motion.js"></script>
+<script>
+'use strict';
+const {clamp, lerp, seg, sstep, ssstep, spring, ease} = OM;
+const W = 1080, H = 1920, DUR = 34;
+const $ = id => document.getElementById(id);
+const Q = new URLSearchParams(location.search);
+
+// ───────────────────────── data (from the report, 5 Nov 2026) ─────────────────────────
+const C = { navy:'#174766', green:'#038060', brown:'#87452b', grey:'#a6a6a6', gold:'#d9a86a',
+            ux:'#d0a062', sat:'#0b524a', comp:'#9b5530', tech:'#66a5ce' };
+const SEC = [
+  { key:'tasks', tab:'ملخص المهام', color:'#111111', total:22, totalLbl:'إجمالي المهام',
+    cells:[[2,'مكتملة',C.navy],[20,'على المخطط',C.green],[0,'متأخرة',C.brown],[0,'معلقة',C.grey]],
+    head:'المهام حسب القطاع', legend:[['مكتملة',C.navy],['على المخطط',C.green]], segC:[C.navy,C.green,C.green,C.green],
+    rows:[[0,[0,1]],[1,[0,1]],[2,[0,3]],[3,[0,1]],[4,[1,1]],[5,[1,8]],[6,[0,4]],[7,[0,1]]],
+    ft:['المهام المكتملة','• تنسيق زيارات كبار الشخصيات والوفود الرسمية في مؤتمر ومعرض الحج 2026','• اجتماع مع وزارة الخارجية لإعادة تفعيل التأشيرة الإلكترونية لمقيمي دول الخليج'] },
+  { key:'suhail', tab:'مشاريع سهيل', color:'#004545', total:19, totalLbl:'إجمالي مشاريع سهيل',
+    cells:[[6,'مكتملة',C.navy],[13,'على المخطط',C.green],[0,'متأخرة',C.brown],[0,'لم تبدأ',C.grey]],
+    head:'مشاريع سهيل حسب القطاع', legend:[['مكتملة',C.navy],['على المخطط',C.green]], segC:[C.navy,C.green,C.green,C.green],
+    rows:[[1,[5,3]],[8,[0,1]],[3,[0,3]],[4,[1,2]],[5,[0,2]],[6,[0,1]],[9,[0,1]]],
+    ft:['أبرز التحديثات','• ضيف بلا حقيبة: عرض تجريبي للمنصة على المطارات القابضة','• نسك امتثال مراكز الضيافة: استكمال التقييم الفني والمالي للعروض'] },
+  { key:'trans', tab:'المعاملات', color:'#1f4d6b', total:708, totalLbl:'إجمالي المعاملات',
+    cells:[[402,'مكتملة',C.navy],[306,'على المخطط',C.green],[0,'متأخرة',C.brown],null],
+    head:'المعاملات حسب القطاع', legend:[['مكتملة',C.navy],['على المخطط',C.green]], segC:[C.navy,C.green,C.green,C.green],
+    rows:[[8,[0,11]],[10,[115,60]],[4,[49,25]],[5,[7,6]],[2,[108,113]],[1,[92,83]],[9,[28,4]],[11,[3,4]]],
+    ft:['المعاملات','• 402 معاملة مكتملة و306 على المخطط','• لا توجد معاملات متأخرة'] },
+  { key:'digital', tab:'التجربة الرقمية', color:'#c99a5c', total:null, totalLbl:'مؤشر نضج التجربة الرقمية',
+    cells:[[54,'تجربة المستخدم',C.ux,'%'],[15,'رضا المستفيد',C.sat,'%'],[52,'التعامل مع الشكاوى',C.comp,'%'],[46,'التقنيات والأدوات',C.tech,'%']],
+    head:'نسبة الإنجاز حسب القطاع', legend:[['تجربة المستخدم',C.ux],['رضا المستفيد',C.sat],['الشكاوى',C.comp],['التقنيات',C.tech]], segC:[C.ux,C.sat,C.comp,C.tech],
+    pct:true, rows:[[5,[51,15,65,25]],[1,[15,15,34,0]],[2,null,'ستُدمج في نسك ولن تُقيَّم بشكل مستقل'],[8,[0,0,57,0]],[6,[65,15,43,75]]],
+    ft:['أبرز المستجدات','• ارتفاع إنجاز تجربة المستخدم إلى 54% مع قرب اكتمال أحد المتطلبات','• ارتفاع التعامل مع الشكاوى إلى 52% بعد تحديث خطة خدمات المستفيدين'] },
+];
+const NAMES = ['مكتب معالي الوزير','وكالة شؤون الحج','وكالة شؤون العمرة والزيارة','وكالة التوعية وتنمية المهارات',
+  'وكالة التعاون الدولي والشراكات','وكالة التحول الرقمي وتقنية المعلومات','مركز منصة نسك الرقمية','برنامج خدمة ضيوف الرحمن',
+  'وكالة تطوير الأعمال وخدمة المستفيدين','مركز امتثال الأعمال','وكالة الخدمات المشتركة','مركز التخطيط الاستراتيجي'];
+
+// ───────────────────────── timeline ─────────────────────────
+const T = {
+  seed: 0.45, drawA: [0.7, 1.9], drawB: [1.05, 2.25], inner: [1.9, 2.6], land: 2.3,
+  words: 2.7, date: 3.25, rule: 3.4, org: 3.6,
+  lift: 5.6, hop: [5.7, 6.65], iris: [5.85, 6.85], tabs: 6.35, hero: 6.5, bars: 6.7, foot: 6.9,
+  count0: [6.7, 7.65], cells0: 7.0, grow0: 7.9, ft0: 8.7,
+  S: [null, 11.6, 16.4, 22.8],           // section changes
+  out: 28.8, irisOut: [29.15, 30.1], home: [29.0, 30.05], thanks: 30.35, org2: 30.7, sub2: 30.85,
+};
+// active-section blend: a(t) in [0..3] is continuous — index i plus progress toward i+1 for each element's own window
+const secAt = t => (t < T.S[1] ? 0 : t < T.S[2] ? 1 : t < T.S[3] ? 2 : 3);
+
+// ───────────────────────── layout (world px) ─────────────────────────
+const TAB = { y: 78, h: 96, x0: 48, x1: 1032, gap: 14 };
+TAB.w = (TAB.x1 - TAB.x0 - 3 * TAB.gap) / 4;
+const tabX = i => TAB.x1 - (i + 1) * TAB.w - i * TAB.gap;
+const HERO = { x: 48, y: 236, w: 984, h: 470 };
+const STAR_H = { x: 818, y: 450 }, STAR_I = { x: 540, y: 820 }, R0 = 126;
+const CELL = [[500, 360], [218, 360], [500, 565], [218, 565]];
+const BARS = { x: 48, y: 740, w: 984, h: 832 };
+const ROW0 = 880, PITCH = 82, AX = 606, MAXW = 498, LBLR = 1004, LBLW = 380;
+const FOOT = { x: 48, y: 1606, w: 984, h: 236 };
+const RING = { r0: 132, dr: 22, w: 13 };
+
+// ───────────────────────── DOM ─────────────────────────
+const world = $('world');
+function mk(parent, cls, css = {}, html = '') { const e = document.createElement('div'); e.className = cls; Object.assign(e.style, css); e.innerHTML = html; parent.appendChild(e); return e; }
+const px = v => v + 'px';
+const tabs = SEC.map((s, i) => mk(world, 'a tab', { left: px(tabX(i)), top: px(TAB.y), width: px(TAB.w) }, s.tab));
+const pill = mk(world, 'a', { height: px(TAB.h), top: px(TAB.y) }); pill.id = 'pill';
+const ptxt = SEC.map((s, i) => mk(world, 'a ptxt', { top: px(TAB.y), width: px(TAB.w + 40) }, s.tab));
+const hero = mk(world, 'a card', { left: px(HERO.x), top: px(HERO.y), width: px(HERO.w), height: px(HERO.h) });
+const vline = mk(world, 'a', { left: px(358), top: px(300), width: '2px', height: px(340), background: 'var(--line)' });
+const hline = mk(world, 'a', { left: px(90), top: px(462), width: px(530), height: '2px', background: 'var(--line)' });
+const chev = mk(world, 'a', { left: px(640), top: px(418), width: '40px', height: '64px' },
+  '<svg width="40" height="64" viewBox="0 0 40 64"><path d="M34 4 L8 32 L34 60 L24 32 Z" fill="#d9a86a"/></svg>');
+const starLbl = SEC.map(s => mk(world, 'a lbl gold', { fontWeight: 700, fontSize: '30px' }, s.totalLbl));
+const cellN = [0, 1, 2, 3].map(() => mk(world, 'a num', { fontSize: '80px' }));
+const cellL = SEC.map(s => s.cells.map(c => c ? mk(world, 'a lbl', { color: c[2] }, c[1]) : null));
+const bars = mk(world, 'a card', { left: px(BARS.x), top: px(BARS.y), width: px(BARS.w), height: px(BARS.h) });
+const head = SEC.map(s => mk(world, 'a hd', { color: s.color === '#c99a5c' ? '#a87a3e' : s.color }, s.head));
+const legend = SEC.map(s => mk(world, 'a leg', {}, s.legend.map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join('')));
+const axis = mk(world, 'a', { left: px(AX), width: '2px', background: '#2b2b2b' });
+const rows = NAMES.map(n => {
+  const lbl = mk(world, 'a rowlbl', {}, n);
+  const segs = [0, 1, 2, 3].map(() => mk(world, 'a seg'));
+  const nums = [0, 1, 2, 3].map(() => mk(world, 'a segn'));
+  const note = mk(world, 'a', { height: '46px', background: '#ece9e5', borderRadius: '6px', fontSize: '21px', color: '#777', lineHeight: '46px', textAlign: 'center', whiteSpace: 'nowrap' });
+  return { lbl, segs, nums, note };
+});
+const foot = mk(world, 'a card', { left: px(FOOT.x), top: px(FOOT.y), width: px(FOOT.w), height: px(FOOT.h) });
+const footBar = mk(world, 'a', { left: px(FOOT.x + FOOT.w - 10), top: px(FOOT.y + 34), width: '8px', height: px(FOOT.h - 68), borderRadius: '4px' });
+const ft = SEC.map(s => mk(world, 'a ft', {}, `<b style="color:${s.color === '#c99a5c' ? '#a87a3e' : s.color}">${s.ft[0]}</b><p>${s.ft[1]}</p><p>${s.ft[2]}</p>`));
+
+// star geometry
+function octagram(R) { // outline of two overlapping squares
+  const r = R * Math.cos(Math.PI / 4) / Math.cos(Math.PI / 8); let d = '';
+  for (let k = 0; k < 16; k++) { const a = -Math.PI / 2 + k * Math.PI / 8, rr = k % 2 ? r : R; d += (k ? 'L' : 'M') + (rr * Math.cos(a)).toFixed(2) + ' ' + (rr * Math.sin(a)).toFixed(2); }
+  return d + 'Z';
+}
+function square(R, rot) { let d = ''; for (let k = 0; k < 4; k++) { const a = rot - Math.PI / 2 + k * Math.PI / 2; d += (k ? 'L' : 'M') + (R * Math.cos(a)).toFixed(2) + ' ' + (R * Math.sin(a)).toFixed(2); } return d + 'Z'; }
+$('sFill').setAttribute('d', octagram(R0)); $('sFillW').setAttribute('d', octagram(R0));
+$('sqA').setAttribute('d', square(R0, 0)); $('sqB').setAttribute('d', square(R0, Math.PI / 4));
+$('sIn').setAttribute('r', (R0 * 0.62).toFixed(1));
+const NS = 'http://www.w3.org/2000/svg';
+const ringEls = SEC[3].cells.map((c, i) => {
+  const r = RING.r0 + i * RING.dr;
+  const tr = document.createElementNS(NS, 'circle'); tr.setAttribute('r', r); tr.setAttribute('fill', 'none'); tr.setAttribute('stroke', '#ece7e0'); tr.setAttribute('stroke-width', RING.w);
+  const ar = document.createElementNS(NS, 'circle'); ar.setAttribute('r', r); ar.setAttribute('fill', 'none'); ar.setAttribute('stroke', c[2]); ar.setAttribute('stroke-width', RING.w);
+  ar.setAttribute('stroke-linecap', 'round'); ar.setAttribute('pathLength', '100'); ar.setAttribute('transform', 'rotate(-90)');
+  $('rings').appendChild(tr); $('rings').appendChild(ar); return { tr, ar, r, v: c[0] };
+});
+
+// ───────────────────────── motion helpers ─────────────────────────
+const sp = (t, t0, z = 0.72, w = 15) => spring(t - t0, z, w);                 // landing spring 0→1
+function swap(t, tin, tout, d = 22) {                                          // a label that rises in and lifts out
+  const a = tin == null ? 1 : sp(t, tin, 0.8, 18), b = tout == null ? 0 : ssstep(tout, tout + 0.32, t);
+  return { op: clamp(a * 1.4) * (1 - b), y: (1 - a) * d - b * d };
+}
+const hex = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+const mix = (a, b, k) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(lerp(v, B[i], k))).join(',')})`; };
+const secWin = i => [T.S[i] ?? 0, T.S[i + 1] ?? T.out];                       // when section i owns the screen
+// progress of the change into section i for an element whose own move runs at offset o, length d
+const chg = (t, i, o, d, curve = ease.expoOut) => (i === 0 ? 1 : curve(seg(t, T.S[i] + o, T.S[i] + o + d)));
+
+// ───────────────────────── camera ─────────────────────────
+let KEYS, HITS;
+function setupCamera() {
+  const F = { x: 540, y: 960, zoom: 1 };
+  KEYS = [
+    { t: 0, x: 540, y: 820, zoom: 1.8 }, { t: 0.45, x: 540, y: 820, zoom: 1.8 },
+    { t: 2.9, x: 540, y: 900, zoom: 1.0, curve: ease.cubicInOut }, { t: 5.6, x: 540, y: 900, zoom: 1.0 },
+    { t: 6.7, x: 690, y: 600, zoom: 1.2, curve: ease.sineInOut }, { t: 7.75, x: 690, y: 600, zoom: 1.2 },
+    { t: 8.8, ...F, curve: ease.cubicInOut },
+    { t: 11.6, ...F }, { t: 12.05, x: 700, y: 560, zoom: 1.27, curve: ease.expoInOut }, { t: 12.95, x: 700, y: 560, zoom: 1.27 }, { t: 13.75, ...F, curve: ease.cubicInOut },
+    { t: 16.4, ...F }, { t: 16.9, x: 690, y: 540, zoom: 1.34, rot: -0.012, curve: ease.expoInOut }, { t: 18.0, x: 690, y: 540, zoom: 1.34, rot: -0.012 }, { t: 18.85, ...F, curve: ease.cubicInOut },
+    { t: 22.8, ...F }, { t: 23.35, x: 760, y: 520, zoom: 1.45, curve: ease.expoInOut }, { t: 24.75, x: 760, y: 520, zoom: 1.45 }, { t: 25.6, ...F, curve: ease.cubicInOut },
+    { t: 28.8, ...F }, { t: 30.1, x: 540, y: 900, zoom: 1.0, curve: ease.cubicInOut },
+  ];
+  HITS = [[T.land, 7, 9], [T.count0[1] - 0.05, 6, 10], [T.S[1] + 1.0, 6, 10], [T.S[2] + 1.15, 11, 8], [T.S[3] + 2.3, 6, 10], [T.irisOut[1], 7, 9]];
+}
+function camAt(t) {
+  const c = OM.camera(t, KEYS, { W, H });
+  let { x, y, rot } = c;
+  for (const [th, amp, decay] of HITS) { const s = OM.shake(t, th, { amp, decay, seed: Math.round(th * 100) }); x += s.x / c.zoom; y += s.y / c.zoom; rot += s.rot; }
+  // quantise so a settled camera repeats its frame exactly (holds stay byte-identical)
+  const q = v => Math.round(v * 16) / 16;
+  return { x: q(x), y: q(y), zoom: Math.round(c.zoom * 2000) / 2000, rot: Math.round(rot * 1e5) / 1e5 };
+}
+
+// ───────────────────────── the state at t (pure) ─────────────────────────
+function state(t) {
+  const s = {};
+  s.cam = camAt(t);
+  s.V = OM.view(s.cam, { W, H });
+  // star position / scale / spin
+  let sx = STAR_I.x, sy = STAR_I.y, sc = 1.34, rot = 0;
+  const kh = ease.expoInOut(seg(t, ...T.hop));
+  const arc = Math.sin(Math.PI * kh) * -60;
+  sx = lerp(STAR_I.x, STAR_H.x, kh); sy = lerp(STAR_I.y, STAR_H.y, kh) + arc; sc = lerp(1.34, 1, kh); rot = kh * 45;
+  for (let i = 1; i < 4; i++) rot += 45 * sp(t, T.S[i] + 0.2, 0.62, 13);       // one point per section
+  const kd = sp(t, T.S[3] + 0.2, 0.8, 12); sc *= lerp(1, 0.78, kd);               // digital: the star yields to its rings
+  const kback = ease.expoInOut(seg(t, ...T.home));
+  sx = lerp(sx, STAR_I.x, kback); sy = lerp(sy, STAR_I.y, kback) - Math.sin(Math.PI * kback) * 50; sc = lerp(sc, 1.34, kback); rot += kback * 45;
+  // landing squash on the intro land
+  const imp = OM.impact(t, T.land, { decay: 9, omega: 24 });
+  s.star = { x: sx, y: sy, s: sc * (1 + 0.035 * imp.r), rot };
+  s.draw = { seed: t < T.seed ? 0 : sp(t, T.seed, 0.45, 22) * (1 - ssstep(T.drawA[0], T.drawA[0] + 0.5, t)),
+    A: ease.cubicInOut(seg(t, ...T.drawA)), B: ease.cubicInOut(seg(t, ...T.drawB)), I: ease.quartOut(seg(t, ...T.inner)),
+    fill: ssstep(T.land - 0.1, T.land + 0.5, t), white: ssstep(T.iris[0] + 0.25, T.iris[1], t) * (1 - ssstep(T.irisOut[0], T.irisOut[1] - 0.2, t)) };
+  // iris (screen space, centred on the star)
+  const sp0 = OM.project(s.V, sx, sy);
+  const kI = ease.expoIn(seg(t, T.iris[0], T.iris[0] + 0.25)) * 0.12 + ease.cubicInOut(seg(t, T.iris[0], T.iris[1])) * 0.88;
+  const kO = ease.cubicInOut(seg(t, ...T.irisOut));
+  const Rcov = 2300;
+  s.iris = { x: sp0[0], y: sp0[1], r: Math.max(0, (t < T.irisOut[0] ? kI : 1 - kO) * Rcov) };
+  // star centre number
+  const a = secAt(t);
+  let num = 0;
+  if (t < T.S[1]) num = Math.round(SEC[0].total * ease.expoOut(seg(t, ...T.count0)));
+  else if (t < T.S[3]) { const i = a, k = ease.expoOut(seg(t, T.S[i] + 0.25, T.S[i] + 1.15)); num = Math.round(lerp(SEC[i - 1].total, SEC[i].total, k)); }
+  const numIn = sp(t, T.count0[0], 0.7, 16), numOut = ssstep(T.S[3] + 0.1, T.S[3] + 0.45, t);
+  const land = Math.max(...[T.count0[1], T.S[1] + 1.15, T.S[2] + 1.15].map(th => OM.impact(t, th - 0.12, { decay: 10, omega: 26 }).r));
+  s.snum = { v: num, op: t < T.count0[0] ? 0 : clamp(numIn * 1.5) * (1 - numOut), s: (0.86 + 0.14 * numIn) * (1 - 0.06 * land) };
+  s.stxt = swap(t, T.S[3] + 0.45, T.out);
+  return s;
+}
+
+// ───────────────────────── draw ─────────────────────────
+const gD = $('gDark').getContext('2d'), gL = $('gLight').getContext('2d');
+const STAR_TILE = (() => { const pts = []; const R = 1, r = R * Math.cos(Math.PI / 4) / Math.cos(Math.PI / 8);
+  for (let k = 0; k < 16; k++) { const a = -Math.PI / 2 + k * Math.PI / 8 + Math.PI / 8, rr = k % 2 ? r : R; pts.push([rr * Math.cos(a), rr * Math.sin(a)]); } return pts; })();
+function lattice(g, cam, { color, alpha, reveal = null, depth = 1.25, spacing = 132 }) {
+  const L = OM.lattice(cam, { W, H, depth, spacing });
+  g.setTransform(...L.matrix);
+  g.strokeStyle = color; g.lineWidth = 1.3 * L.r / 1.4 * 1.4 / 1.4; g.lineWidth = 1.4 / Math.hypot(L.matrix[0], L.matrix[1]);
+  const S = spacing, rr = S * 0.36;
+  for (let y = L.y0 - S; y <= L.y1 + S; y += S) for (let x = L.x0 - S; x <= L.x1 + S; x += S) {
+    let a = alpha;
+    if (reveal) { const d = Math.hypot(x - reveal.x, y - reveal.y); a *= sstep(reveal.r, reveal.r - 260, d); }
+    if (a < 0.004) continue;
+    g.globalAlpha = a; g.beginPath();
+    STAR_TILE.forEach(([px_, py_], k) => { const X = x + px_ * rr, Y = y + py_ * rr; k ? g.lineTo(X, Y) : g.moveTo(X, Y); }); g.closePath();
+    // the links of the khatam tiling: from each star's outer points to its neighbours'
+    g.moveTo(x + rr, y); g.lineTo(x + S - rr, y); g.moveTo(x, y + rr); g.lineTo(x, y + S - rr);
+    g.stroke();
+  }
+  g.globalAlpha = 1;
+}
+let NOISE;
+function makeNoise() { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'), d = g.createImageData(256, 256), r = OM.rng(11);
+  for (let i = 0; i < 256 * 256; i++) { const v = r() < 0.5 ? 0 : 255; d.data[i * 4] = d.data[i * 4 + 1] = d.data[i * 4 + 2] = v; d.data[i * 4 + 3] = Math.floor(r() * 7); } g.putImageData(d, 0, 0); NOISE = g.createPattern(c, 'repeat'); }
+
+function groundDark(s, t) {
+  const g = gD; g.setTransform(1, 0, 0, 1, 0, 0);
+  const grd = g.createRadialGradient(540, 860, 60, 540, 900, 1250); grd.addColorStop(0, '#1d1712'); grd.addColorStop(0.55, '#0d0b09'); grd.addColorStop(1, '#040303');
+  g.fillStyle = grd; g.fillRect(0, 0, W, H);
+  const rv = { x: STAR_I.x, y: STAR_I.y, r: 120 + 1700 * ease.cubicOut(seg(t, 1.0, 3.4)) };
+  lattice(g, s.cam, { color: '#d9a86a', alpha: 0.14, reveal: rv });
+  g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = NOISE; g.fillRect(0, 0, W, H);
+}
+function groundLight(s, t) {
+  const g = gL; g.setTransform(1, 0, 0, 1, 0, 0);
+  g.fillStyle = '#fbf7f4'; g.fillRect(0, 0, W, H);
+  lattice(g, s.cam, { color: '#c49a62', alpha: 0.11 });
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  const v = g.createRadialGradient(540, 900, 500, 540, 960, 1300); v.addColorStop(0, 'rgba(251,247,244,0)'); v.addColorStop(1, 'rgba(236,226,212,.55)');
+  g.fillStyle = v; g.fillRect(0, 0, W, H);
+}
+
+function place(el, x, y, { s = 1, op = 1, rot = 0, ax = 0.5, ay = 0.5, sx = 1, sy = 1 } = {}) {
+  if (op <= 0.001) { if (el.style.display !== 'none') el.style.display = 'none'; return; }
+  if (el.style.display === 'none') el.style.display = '';
+  const w = el._w ?? (el._w = el.offsetWidth), h = el._h ?? (el._h = el.offsetHeight);
+  el.style.opacity = op.toFixed(4);
+  el.style.transform = `translate(${(x - w * ax).toFixed(2)}px,${(y - h * ay).toFixed(2)}px) rotate(${rot.toFixed(3)}deg) scale(${(s * sx).toFixed(4)},${(s * sy).toFixed(4)})`;
+}
+const mat = (el, M) => { el.style.transform = `matrix(${M.map(v => v.toFixed(5)).join(',')})`; };
+let TRACK = {};
+
+function render(t) {
+  const s = state(t);
+  groundDark(s, t);
+  mat($('dark'), s.V); mat($('world'), s.V); mat($('top'), s.V);
+  // ── intro type on black
+  const words = [...$('title').children];
+  const lift = OM.liftOut(t, T.lift, { dur: 0.45, dist: 70 });
+  words.forEach((w, i) => { const r = OM.wordRise(t, T.words + 0.13 * (2 - i), { dist: 40 }); w.style.opacity = r.op; w.style.transform = `translateY(${r.y}px) scale(${r.s})`; });
+  const tOn = t < T.thanks;
+  place($('title'), 540, 1110 + lift.dy, { op: t < T.words ? 0 : lift.op, s: lift.s });
+  const d = OM.wordRise(t, T.date, { dist: 30 }), lf2 = OM.liftOut(t, T.lift + 0.06, { dur: 0.45, dist: 70 });
+  place($('date'), 540, 1222 + d.y + lf2.dy, { op: t < T.date ? 0 : d.op * lf2.op, s: d.s });
+  const rk = ease.expoOut(seg(t, T.rule, T.rule + 0.9)); $('rule').style.width = '320px';
+  place($('rule'), 540, 1300 + lf2.dy, { op: (rk > 0 ? 1 : 0) * lf2.op, sx: Math.max(rk, 0.001) });
+  const o = OM.wordRise(t, T.org, { dist: 24 }), lf3 = OM.liftOut(t, T.lift + 0.1, { dur: 0.45, dist: 70 });
+  place($('org'), 540, 1372 + o.y + lf3.dy, { op: t < T.org ? 0 : o.op * lf3.op, s: o.s });
+  const th = OM.wordRise(t, T.thanks, { dist: 46 }), o2 = OM.wordRise(t, T.org2, { dist: 30 }), s2 = OM.wordRise(t, T.sub2, { dist: 30 });
+  place($('thanks'), 540, 1130 + th.y, { op: t < T.thanks ? 0 : th.op, s: th.s });
+  place($('org2'), 540, 1290 + o2.y, { op: t < T.org2 ? 0 : o2.op, s: o2.s });
+  place($('sub2'), 540, 1352 + s2.y, { op: t < T.sub2 ? 0 : s2.op, s: s2.s });
+
+  // ── iris
+  const cr = $('cream');
+  if (s.iris.r < 1) cr.style.display = 'none';
+  else { cr.style.display = ''; cr.style.clipPath = s.iris.r >= 2299 ? 'none' : `circle(${s.iris.r.toFixed(1)}px at ${s.iris.x.toFixed(1)}px ${s.iris.y.toFixed(1)}px)`; groundLight(s, t); }
+  const a = secAt(t), inOut = t >= T.out;
+  const out = i => OM.liftOut(t, T.out + 0.08 + i * 0.05, { dur: 0.4, dist: 50 });
+
+  // ── page band (section colour)
+  let band = SEC[0].color; for (let i = 1; i < 4; i++) { const k = ease.cubicInOut(seg(t, T.S[i], T.S[i] + 0.6)); if (k > 0) band = mix(i === 1 ? SEC[0].color : SEC[i - 1].color, SEC[i].color, k); }
+  // mix() returns rgb(); for chained mixes feed hex of the previous section — fine since windows don't overlap
+  $('band').style.background = band;
+
+  // ── tabs + pill
+  const tabK = i => OM.popIn(t, T.tabs + 0.05 * (3 - i), { rise: 26 });
+  tabs.forEach((el, i) => { const p = tabK(i), q = out(0); place(el, tabX(i) + TAB.w / 2, TAB.y + TAB.h / 2 + p.dy + q.dy, { op: (t < T.tabs ? 0 : p.op) * q.op, s: p.s }); });
+  // pill: morphs from tab to tab with a spring; colour follows
+  let pxp = tabX(0), pw = TAB.w, pc = SEC[0].color;
+  for (let i = 1; i < 4; i++) {
+    const k = sp(t, T.S[i], 0.74, 15);
+    if (k > 0) { const A = tabX(i - 1), B = tabX(i), lead = clamp(k * 1.25), trail = clamp(k * 0.85);
+      // stretch: the leading edge (left, RTL travel) runs ahead, the trailing edge follows
+      const L = lerp(A, B, lead), Rr = lerp(A + TAB.w, B + TAB.w, trail); pxp = Math.min(L, Rr - 40); pw = Math.max(40, Rr - pxp); pc = mix(SEC[i - 1].color, SEC[i].color, clamp(k)); }
+  }
+  pill.style.width = px(pw); pill.style.background = pc; pill._w = undefined;
+  { const p = tabK(0), q = out(0); place(pill, pxp + pw / 2, TAB.y + TAB.h / 2 + p.dy + q.dy, { op: (t < T.tabs ? 0 : p.op) * q.op, s: p.s }); }
+  ptxt.forEach((el, i) => { const [w0, w1] = secWin(i);
+    const op = sstep(w0 + 0.15, w0 + 0.45, t) * (1 - sstep(w1 + 0.05, w1 + 0.25, t)) * (i === 0 ? sstep(T.tabs + 0.1, T.tabs + 0.4, t) : 1);
+    place(el, tabX(i) + TAB.w / 2, TAB.y + TAB.h / 2 + out(0).dy, { op: op * out(0).op }); });
+
+  // ── hero card
+  const hp = OM.popIn(t, T.hero, { rise: 40 }), hq = out(1);
+  const heroOp = (t < T.hero ? 0 : hp.op) * hq.op, hdy = hp.dy + hq.dy;
+  place(hero, HERO.x + HERO.w / 2, HERO.y + HERO.h / 2 + hdy, { op: heroOp, s: hp.s });
+  const dig = sp(t, T.S[3] + 0.3, 0.8, 14);                       // digital: dividers / chevron make room for the rosette
+  place(vline, 359, 470 + hdy, { op: heroOp * sstep(T.hero + 0.3, T.hero + 0.7, t) });
+  place(hline, 355, 463 + hdy, { op: heroOp * sstep(T.hero + 0.3, T.hero + 0.7, t) });
+  place(chev, 660 - 24 * dig, 450 + hdy, { op: heroOp * sstep(T.cells0, T.cells0 + 0.4, t) * (1 - dig) , s: 1 - 0.3 * dig });
+  starLbl.forEach((el, i) => { const [w0, w1] = secWin(i); const sw = swap(t, i === 0 ? T.count0[0] + 0.2 : w0 + 0.4, i === 3 ? null : w1);
+    place(el, STAR_H.x + (i === 3 ? -6 : 0), (i === 3 ? 684 : 640) + sw.y + hdy, { op: sw.op * heroOp }); });
+  // cells: numbers hop out of the star the first time, then roll from section to section
+  for (let c = 0; c < 4; c++) {
+    const [cx, cy] = CELL[c];
+    let v = 0, col = SEC[0].cells[c][2], suf = '', op = 1, x = cx, y = cy - 26, sc = 1;
+    const h0 = T.cells0 + 0.09 * c, kh = ease.expoOut(seg(t, h0, h0 + 0.62));
+    const hopP = OM.hop(t, h0, h0 + 0.62, { x: STAR_H.x, y: STAR_H.y }, { x: cx, y: cy - 26 }, { height: 120 });
+    if (t < h0 + 0.62) { x = hopP.x; y = hopP.y; sc = lerp(0.4, 1, kh); op = t < h0 ? 0 : clamp(kh * 3); }
+    v = SEC[0].cells[c][0];
+    const im = OM.impact(t, h0 + 0.62, { decay: 11, omega: 28 });
+    let sqx = 1 + 0.08 * im.r, sqy = 1 - 0.08 * im.r;
+    for (let i = 1; i < 4; i++) {
+      const A = SEC[i - 1].cells[c], B = SEC[i].cells[c];
+      const k = ease.expoOut(seg(t, T.S[i] + 0.35 + 0.07 * c, T.S[i] + 1.15 + 0.07 * c));
+      if (t < T.S[i]) break;
+      const av = A ? A[0] : 0, bv = B ? B[0] : 0;
+      v = Math.round(lerp(av, bv, k)); col = mix((A || B)[2], (B || A)[2], clamp(k * 1.6)); suf = (B && B[3]) || '';
+      op = (A ? 1 : clamp(k * 2)) * (B ? 1 : 1 - clamp(k * 2.5));
+      const r2 = OM.impact(t, T.S[i] + 1.0 + 0.07 * c, { decay: 11, omega: 28 }).r; sqx = 1 + 0.06 * r2; sqy = 1 - 0.06 * r2;
+    }
+    const el = cellN[c]; const txt = v + suf; if (el.textContent !== txt) { el.textContent = txt; el._w = undefined; }
+    el.style.color = col;
+    place(el, x, y + hdy, { op: op * heroOp, s: sc, sx: sqx, sy: sqy });
+    SEC.forEach((S_, i) => { const L = cellL[i][c]; if (!L) return; const [w0, w1] = secWin(i);
+      const sw = swap(t, i === 0 ? h0 + 0.35 : w0 + 0.45 + 0.07 * c, i === 3 ? null : w1 + 0.1);
+      place(L, cx, cy + 48 + sw.y + hdy, { op: sw.op * heroOp }); });
+  }
+
+  // ── bars card
+  const bp = OM.popIn(t, T.bars, { rise: 50 }), bq = out(2);
+  const barOp = (t < T.bars ? 0 : bp.op) * bq.op, bdy = bp.dy + bq.dy;
+  place(bars, BARS.x + BARS.w / 2, BARS.y + BARS.h / 2 + bdy, { op: barOp, s: bp.s });
+  SEC.forEach((S_, i) => { const [w0, w1] = secWin(i); const sw = swap(t, i === 0 ? T.bars + 0.3 : w0 + 1.3, i === 3 ? null : w1 + 0.05);
+    place(head[i], LBLR, BARS.y + 62 + sw.y + bdy, { op: sw.op * barOp, ax: 1 });
+    place(legend[i], BARS.x + 40, BARS.y + 64 + sw.y + bdy, { op: sw.op * barOp, ax: 0 }); });
+  // axis spans the rows of the current layout
+  const nRows = i => SEC[i].rows.length;
+  let nr = nRows(0); for (let i = 1; i < 4; i++) { const k = ease.cubicInOut(seg(t, T.S[i] + 1.4, T.S[i] + 2.2)); if (k > 0) nr = lerp(nRows(i - 1), nRows(i), k); }
+  const axH = (nr - 1) * PITCH + 66, axK = ease.expoOut(seg(t, T.grow0 - 0.3, T.grow0 + 0.4));
+  axis.style.height = px(axH); axis._h = undefined;
+  place(axis, AX, ROW0 - 10 + bdy, { op: barOp * (axK > 0 ? 1 : 0), ay: 0, sy: Math.max(axK, 0.001) });
+  // rows
+  const rowState = (i, n) => { const r = SEC[i].rows.findIndex(q => q[0] === n); if (r < 0) return null;
+    const R = SEC[i].rows[r], segs = R[1], max = Math.max(...SEC[i].rows.map(q => q[1] ? (SEC[i].pct ? q[1].reduce((u, v) => u + v, 0) : q[1].reduce((u, v) => u + v, 0)) : 0));
+    const ws = segs ? segs.map(v => v / max * MAXW) : [0, 0, 0, 0];
+    return { slot: r, ws: [0, 1, 2, 3].map(k => ws[k] || 0), vals: [0, 1, 2, 3].map(k => (segs && segs[k]) || 0), note: R[2] || null, i }; };
+  TRACK.rows = [];
+  NAMES.forEach((nm_, ri) => { const n = ri;
+    const E = rows[ri];
+    // walk the sections: state before and after the current change
+    let cur = rowState(0, n), from = null, k = 1, grow = 1, i0 = 0;
+    for (let i = 1; i < 4; i++) if (t >= T.S[i]) { from = rowState(i - 1, n); cur = rowState(i, n); i0 = i; }
+    const stag = (cur || from) ? (cur || from).slot * 0.045 : 0;
+    if (i0 > 0) k = ease.cubicInOut(seg(t, T.S[i0] + 1.4 + stag, T.S[i0] + 2.25 + stag));
+    else { from = null; grow = sp(t, T.grow0 + 0.07 * (cur ? cur.slot : 0), 0.78, 11); }
+    if (!cur && !from) { [E.lbl, ...E.segs, ...E.nums, E.note].forEach(el => place(el, 0, 0, { op: 0 })); return; }
+    const A = from || { slot: cur.slot, ws: [0, 0, 0, 0], vals: [0, 0, 0, 0], ghost: true }, B = cur || { slot: from.slot, ws: [0, 0, 0, 0], vals: [0, 0, 0, 0], gone: true };
+    const slot = lerp(A.slot, B.slot, k);
+    const y = ROW0 + slot * PITCH + bdy;
+    const lop = i0 === 0 ? sstep(T.grow0 - 0.2 + 0.07 * cur.slot, T.grow0 + 0.2 + 0.07 * cur.slot, t) : (from && cur ? 1 : from ? 1 - clamp(k * 2) : clamp(k * 2 - 0.6));
+    const lx = (from && !cur) ? -40 * k : (!from && cur && i0 > 0) ? 40 * (1 - k) : 0;
+    const op = lop * barOp * (inOut ? 1 : 1);
+    if (!E.lbl._fit) { E.lbl._fit = Math.min(1, LBLW / E.lbl.offsetWidth); }
+    place(E.lbl, LBLR + lx, y + 23, { op, ax: 1, s: E.lbl._fit });
+    // segments from the axis leftwards
+    let xr = AX - 1;
+    const segCol = j => { const ca = SEC[A.i ?? i0 - 1 >= 0 ? (from ? from.i : i0) : 0]; return null; };
+    for (let j = 0; j < 4; j++) {
+      const w = Math.max(0, lerp(A.ws[j], B.ws[j], k) * (i0 === 0 ? grow : 1));
+      const el = E.segs[j], nm = E.nums[j];
+      const cA = SEC[from ? from.i : (cur ? cur.i : 0)].segC[j], cB = SEC[cur ? cur.i : from.i].segC[j];
+      el.style.width = px(w); el.style.background = mix(cA, cB, clamp(k * 1.3)); el._w = undefined;
+      el.style.borderRadius = j === 0 ? '0 0 0 0' : '0';
+      place(el, xr - w, y, { op: w > 0.5 ? op : 0, ax: 0, ay: 0 });
+      const v = Math.round(lerp(A.vals[j], B.vals[j], k) * (i0 === 0 ? clamp(grow) : 1));
+      const show = w > 34 && (k > 0.85 || k < 0.15) && (i0 > 0 || grow > 0.6);
+      const txt = (SEC[cur ? cur.i : 0].pct && k > 0.5 ? v + '%' : String(v)); if (nm.textContent !== txt) { nm.textContent = txt; nm._w = undefined; }
+      nm.style.width = px(Math.max(w, 1)); nm._w = undefined;
+      place(nm, xr - w, y, { op: show ? op : 0, ax: 0, ay: 0 });
+      xr -= w;
+    }
+    // the note row (digital: the Umrah agency is merged into Nusuk)
+    const nk = (cur && cur.note) ? clamp(k * 1.5 - 0.3) : (from && from.note ? 1 - clamp(k * 2) : 0);
+    if (cur && cur.note) { E.note.textContent = cur.note; }
+    E.note.style.width = px(MAXW * Math.max(nk, 0.001)); E.note._w = undefined;
+    place(E.note, AX - 1 - MAXW * nk, y, { op: nk > 0.01 ? op : 0, ax: 0, ay: 0 });
+    TRACK.rows.push([xr, y]);
+  });
+
+  // ── footer
+  const fp = OM.popIn(t, T.foot, { rise: 50 }), fq = out(3);
+  const footOp = (t < T.foot ? 0 : fp.op) * fq.op, fdy = fp.dy + fq.dy;
+  place(foot, FOOT.x + FOOT.w / 2, FOOT.y + FOOT.h / 2 + fdy, { op: footOp, s: fp.s });
+  let fc = SEC[0].color; for (let i = 1; i < 4; i++) { const k = ease.cubicInOut(seg(t, T.S[i] + 1.9, T.S[i] + 2.3)); if (k > 0) fc = mix(SEC[i - 1].color, SEC[i].color, k); }
+  footBar.style.background = fc;
+  const fbk = ease.expoOut(seg(t, T.foot + 0.2, T.foot + 0.8));
+  place(footBar, FOOT.x + FOOT.w - 34, FOOT.y + FOOT.h / 2 + fdy, { op: footOp * (fbk > 0 ? 1 : 0), sy: Math.max(fbk, 0.001) });
+  ft.forEach((el, i) => { const [w0, w1] = secWin(i); const sw = swap(t, i === 0 ? T.ft0 : w0 + 1.95, i === 3 ? null : w1 + 0.1, 26);
+    place(el, FOOT.x + FOOT.w - 60, FOOT.y + FOOT.h / 2 + sw.y + fdy, { op: sw.op * footOp, ax: 1 }); });
+
+  // ── the star
+  const st = s.star, D = s.draw;
+  $('star').setAttribute('transform', `translate(${st.x.toFixed(2)} ${st.y.toFixed(2)}) rotate(${st.rot.toFixed(3)}) scale(${st.s.toFixed(4)})`);
+  $('seed').setAttribute('r', (7 * D.seed).toFixed(2)); $('seed').style.opacity = D.seed > 0.01 ? 1 : 0;
+  $('sqA').style.strokeDashoffset = (1 - D.A).toFixed(4); $('sqB').style.strokeDashoffset = (1 - D.B).toFixed(4);
+  $('sqA').style.opacity = D.A > 0 ? 1 : 0; $('sqB').style.opacity = D.B > 0 ? 1 : 0;
+  $('sIn').style.strokeDashoffset = (1 - D.I).toFixed(4); $('sIn').style.opacity = D.I > 0 ? 0.7 : 0;
+  $('sFill').style.opacity = D.fill.toFixed(3); $('sFillW').style.opacity = D.white.toFixed(3);
+  // the rosette: four rings around the star, one per maturity dimension
+  ringEls.forEach((R, i) => {
+    const k = ease.cubicOut(seg(t, T.S[3] + 0.85 + 0.16 * i, T.S[3] + 2.0 + 0.16 * i)) * (1 - ease.expoIn(seg(t, T.out, T.out + 0.5)));
+    const tk = sstep(T.S[3] + 0.5 + 0.1 * i, T.S[3] + 0.9 + 0.1 * i, t) * (1 - sstep(T.out + 0.2, T.out + 0.6, t));
+    R.ar.setAttribute('stroke-dasharray', `${(R.v * k).toFixed(3)} 200`); R.ar.style.opacity = k > 0.002 ? 1 : 0;
+    R.tr.style.opacity = tk.toFixed(3);
+  });
+  $('rings').setAttribute('transform', `translate(${st.x.toFixed(2)} ${st.y.toFixed(2)})`);
+  const sn = $('snum'), txt = String(s.snum.v); if (sn.textContent !== txt) { sn.textContent = txt; sn._w = undefined; }
+  sn.style.fontSize = s.snum.v >= 100 ? '84px' : '94px'; sn._w = undefined; sn._h = undefined;
+  place(sn, st.x, st.y + 4, { op: s.snum.op, s: s.snum.s * (st.s / 1) });
+  place($('stxt'), st.x, st.y + s.stxt.y * 0.5, { op: s.stxt.op, s: st.s / 0.78 * 0.78 });
+
+  // tracking (screen space) for probe / motion
+  const P = (x, y) => OM.project(s.V, x, y);
+  const sr = R0 * st.s;
+  const sb = OM.projectBox(s.V, { x: st.x - sr, y: st.y - sr, w: 2 * sr, h: 2 * sr });
+  TRACK = { star: { ...sb, op: 1 }, pill: P(pxp + pw / 2, TAB.y + 48), iris: [s.iris.x, s.iris.y, s.iris.r < 2299 ? s.iris.r : 0], rows: TRACK.rows.map(([x, y]) => P(x, y)), cam: s.cam };
+  return s;
+}
+
+// ───────────────────────── contract ─────────────────────────
+let CUR = -1;
+async function seek(t) { t = clamp(t, 0, DUR); render(t); CUR = t; return true; }
+window.__seek = seek;
+window.__meta = { dur: DUR, fps: 30, inFrame: { star: [0.6, DUR, 'whole'] } };
+
+window.__motion = (t0, t1) => {
+  render(t0); const A = TRACK; render((t0 + t1) / 2); const M = TRACK; render(t1); const B = TRACK;
+  let d = OM.screenTravel({ ...A.cam }, { ...B.cam }, { ...M.cam }, { W, H });
+  const dist = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
+  d = Math.max(d, dist([A.star.x, A.star.y], [B.star.x, B.star.y]), Math.abs(A.star.w - B.star.w), dist(A.pill, B.pill), Math.abs(A.iris[2] - B.iris[2]) * 0.5);
+  A.rows.forEach((p, i) => { if (B.rows[i]) d = Math.max(d, dist(p, B.rows[i])); });
+  if (CUR >= 0) render(CUR);
+  return d;
+};
+window.__events = () => {
+  const E = [['seed', T.seed], ['drawA', T.drawA[0]], ['drawB', T.drawB[0]], ['land', T.land], ['words', T.words], ['date', T.date], ['org', T.org],
+    ['lift', T.lift], ['iris', T.iris[0]], ['tabs', T.tabs], ['count', T.count0[1]]];
+  for (let c = 0; c < 4; c++) E.push(['cell', T.cells0 + 0.09 * c + 0.62, c]);
+  for (let r = 0; r < 8; r++) E.push(['bar', T.grow0 + 0.07 * r + 0.2, r]);
+  for (let i = 1; i < 4; i++) { E.push(['pill', T.S[i], i]); E.push(['roll', T.S[i] + (i === 3 ? 0.9 : 1.15), i]); E.push(['reflow', T.S[i] + 1.4, i]); }
+  for (let r = 0; r < 4; r++) E.push(['ring', T.S[3] + 0.85 + 0.16 * r, r]);
+  E.push(['out', T.out], ['irisOut', T.irisOut[0]], ['close', T.irisOut[1]], ['thanks', T.thanks], ['org2', T.org2]);
+  return E;
+};
+window.__ready = document.fonts.ready.then(() => { makeNoise(); setupCamera(); return seek(0); });
+
+// preview: ?play  |  ?t=12.3
+window.__ready.then(() => {
+  if (Q.has('t')) seek(parseFloat(Q.get('t')));
+  if (Q.has('play')) { const t0 = performance.now(); const loop = () => { seek(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); }; loop(); }
+});
+</script>
+</body>
+</html>
