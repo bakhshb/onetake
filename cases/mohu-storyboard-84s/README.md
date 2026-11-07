@@ -32,7 +32,7 @@ in progress. The main tracks show no delays.
 The opening and the closing use the report's cover photograph (`kaaba.jpg`: the Kiswa and the door), darkened and faded to black under the type. Scene 04 carries the full text of the two completed tasks from page 2 of the report: the task, the sector and the note.
 
 Files: `comp.html` (`?play`, `?t=12.3`), `motion.js`, `faces.css` (IBM Plex Sans Arabic, OFL), and `score.py` → `sfx.wav`,
-which places swipes at the transitions only. `kaaba.jpg` is the report's cover photograph. The video is `mohu-storyboard.mp4`, a 30 fps draft with shutter motion blur.
+which places swipes at the transitions only. `kaaba.jpg` is the report's cover photograph; `logo_light.png` (from the cover) and `logo_dark.png` (the same, ink text for the cream page) are the ministry logo in the header and the closing. The video is `mohu-storyboard.mp4`, a 30 fps draft with shutter motion blur.
 
 ```bash
 python3 scripts/render.py cases/mohu-storyboard-84s/comp.html --out cases/mohu-storyboard-84s/mohu-storyboard.mp4 \

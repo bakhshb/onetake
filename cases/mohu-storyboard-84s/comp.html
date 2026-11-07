@@ -39,7 +39,7 @@ canvas.L{display:block}
   </svg>
 </div>
 <div id="hud" class="L">
-  <div id="hdr" class="a" style="font-size:36px;font-weight:700">وزارة الحج والعمرة</div>
+  <div id="hdr" class="a" style="width:366px;height:81px"><img id="lgL" src="logo_light.png" style="position:absolute;left:0;top:0;width:366px;height:81px"><img id="lgD" src="logo_dark.png" style="position:absolute;left:0;top:0;width:366px;height:81px;opacity:0"></div>
   <div id="hrule" class="a" style="width:920px;height:3px;background:var(--gold)"></div>
   <div id="ptrack" class="a" style="width:920px;height:7px;border-radius:4px"></div>
   <div id="pfill" class="a" style="height:7px;border-radius:4px;background:var(--gold)"></div>
@@ -170,7 +170,7 @@ const prioBar = i => { const top = 500 + i * 300; return [[952, top + 48], [952,
 add(10, dark, '', { fontSize: '100px', fontWeight: 700, color: '#fff' }, 'متابعة التنفيذ', 540, 860, { ax: 0.5, at: 79.45 });
 add(10, dark, '', { fontSize: '100px', fontWeight: 700, color: '#fff' }, 'ورفع الجاهزية', 540, 995, { ax: 0.5, at: 79.6 });
 add(10, dark, '', { fontSize: '92px', fontWeight: 700, color: C.gold }, 'لخدمة ضيوف الرحمن', 540, 1125, { ax: 0.5, at: 79.75 });
-add(10, dark, '', { fontSize: '42px', fontWeight: 700, color: '#fff' }, 'وزارة الحج والعمرة', 540, 1375, { ax: 0.5, at: 80.3 });
+add(10, dark, '', { width: '520px', height: '115px' }, '<img src="logo_light.png" style="width:520px;height:115px;display:block">', 540, 1390, { ax: 0.5, at: 80.3 });
 
 // enter / exit times
 SP.forEach(s => {
@@ -302,9 +302,9 @@ function render(t) {
   // HUD: header (white on black, ink on cream), progress
   const onCream = sl.yc - sl.hh < 110 && sl.hh > 0;
   const hk = t < CLOSE[0] ? ssstep(OPEN[0] + 0.45, OPEN[1], t) : 1 - ssstep(CLOSE[0], CLOSE[1] - 0.2, t);
-  $('hdr').style.color = mix('#ffffff', '#1b1b1b', clamp(hk));
+  $('lgD').style.opacity = clamp(hk).toFixed(3); $('lgL').style.opacity = (1 - clamp(hk)).toFixed(3);
   const hIn = OM.popIn(t, 0.35, { rise: 20 });
-  place($('hdr'), 1000, 108 + hIn.dy, { op: t < 0.35 ? 0 : hIn.op, ax: 1 });
+  place($('hdr'), 1000, 98 + hIn.dy, { op: t < 0.35 ? 0 : hIn.op, ax: 1 });
   const rk = ease.expoOut(seg(t, 0.5, 1.4)); $('hrule').style.transformOrigin = '100% 50%';
   place($('hrule'), 540, 162, { op: rk > 0 ? 1 : 0 }); $('hrule').style.transform += ` scaleX(${Math.max(rk, 0.001).toFixed(4)})`;
   $('ptrack').style.background = mix('#3a332b', '#e6dfd6', clamp(hk));
@@ -333,7 +333,7 @@ window.__motion = (t0, t1) => {
 };
 // sound only at the transitions between scenes
 window.__events = () => [['open', OPEN[0], 0], ...TRANS.slice(1, -1).map((b, i) => ['move', b - 0.3, i + 1]), ['close', CLOSE[0], 9]];
-window.__ready = Promise.all([document.fonts.ready, KLOAD]).then(() => { makeKiswa(); makeLight(); return seek(0); });
+window.__ready = Promise.all([document.fonts.ready, KLOAD, ...[...document.images].map(i => i.decode().catch(() => 0))]).then(() => { makeKiswa(); makeLight(); return seek(0); });
 
 window.__ready.then(() => {
   if (Q.has('t')) seek(parseFloat(Q.get('t')));
