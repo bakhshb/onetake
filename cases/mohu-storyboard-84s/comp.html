@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<!-- onetake · PolyForm Noncommercial 1.0.0 · lineage otk-7f3e1c
+     Executive storyboard, weekly achievement report (5 Nov 2026) — 11 scenes, 84 s, 9:16.
+     One take carried by a single gold line: it underlines the title, becomes the status axis, splits into the
+     status bars, edges the cards, branches into the four maturity rings, and gathers under the closing. No star. -->
+<html lang="ar" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>لوحة القصة القيادية · onetake</title>
+<link rel="stylesheet" href="faces.css">
+<style>
+:root{ --black:#0b0a09; --gold:#d9a86a; --goldN:#b8894e; --cream:#faf6f2; --ink:#1b1b1b; --mute:#8a8580;
+  --navy:#174766; --green:#038060; }
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--black)}
+body{font-family:'Plex',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.L{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.W{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0}
+.a{position:absolute;left:0!important;top:0!important;direction:rtl;white-space:nowrap;will-change:transform,opacity}
+canvas.L{display:block}
+.card{background:#fff;border:2px solid #efe7dd;border-radius:30px;box-shadow:0 18px 40px -26px rgba(70,50,20,.28)}
+.ttl{font-size:68px;font-weight:700;color:var(--ink)}
+.sub{font-size:32px;font-weight:500;color:var(--mute)}
+.num{font-weight:700;direction:ltr;unicode-bidi:isolate;line-height:1;text-align:center}
+.h{font-size:50px;font-weight:700;color:var(--ink)}
+.g{font-size:36px;font-weight:700;color:var(--green)}
+.m{font-size:33px;font-weight:500;color:#8b8680}
+</style>
+</head>
+<body>
+<canvas id="gDark" class="L" width="1080" height="1920"></canvas>
+<div id="dark" class="W"></div>
+<div id="cream" class="L">
+  <canvas id="gLight" class="L" width="1080" height="1920"></canvas>
+  <div id="world" class="W"></div>
+</div>
+<div id="top" class="W">
+  <svg class="a" width="1080" height="1920" viewBox="0 0 1080 1920" style="overflow:visible;direction:ltr">
+    <g id="deco"></g><g id="strands"></g>
+  </svg>
+</div>
+<div id="hud" class="L">
+  <div id="hdr" class="a" style="font-size:36px;font-weight:700">وزارة الحج والعمرة</div>
+  <div id="hrule" class="a" style="width:920px;height:3px;background:var(--gold)"></div>
+  <div id="ptrack" class="a" style="width:920px;height:7px;border-radius:4px"></div>
+  <div id="pfill" class="a" style="height:7px;border-radius:4px;background:var(--gold)"></div>
+</div>
+
+<script src="motion.js"></script>
+<script>
+'use strict';
+const {clamp, lerp, seg, sstep, ssstep, spring, ease} = OM;
+const W = 1080, H = 1920, DUR = 84;
+const $ = id => document.getElementById(id);
+const Q = new URLSearchParams(location.search);
+const C = { gold:'#d9a86a', goldN:'#b8894e', navy:'#174766', green:'#038060', ux:'#c9964f', comp:'#9b5530', tech:'#66a5ce', sat:'#0b524a' };
+
+// ───────────────────────── scenes (from the executive storyboard) ─────────────────────────
+const S = [0, 4, 9, 16, 24, 31, 41, 48, 63, 70, 79, DUR];      // scene k owns [S[k], S[k+1])
+const OPEN = [3.95, 4.6], CLOSE = [78.75, 79.35];              // the cream page opens from / closes onto the line
+
+// ───────────────────────── DOM ─────────────────────────
+const world = $('world'), dark = $('dark');
+function mk(parent, cls, css = {}, html = '') { const e = document.createElement('div'); e.className = 'a ' + cls; Object.assign(e.style, css); e.innerHTML = html; parent.appendChild(e); return e; }
+const px = v => v + 'px';
+const SP = [];            // specs: {el, k, x, y, ax, ay, at, out, rise, count, kind}
+function add(k, parent, cls, css, html, x, y, o = {}) { const el = mk(parent, cls, css, html); const s = { el, k, x, y, ax: 1, ay: 0.5, d: 0, rise: 34, ...o }; SP.push(s); return s; }
+const R = 990;            // right margin for right-aligned text
+
+function head(k, title, sub) {
+  add(k, world, 'ttl', {}, title, R, 330, { d: 0 });
+  if (sub) add(k, world, 'sub', {}, sub, R, 410, { d: 0.08 });
+}
+// a card whose top edge is the carried line
+function lineCards(k, items, greenFirst) {
+  items.forEach((it, i) => { const top = 520 + i * 380, d = 0.2 + 0.14 * i;
+    add(k, world, 'card', { width: '880px', height: '330px' }, '', 540, top + 165, { ax: 0.5, d, rise: 50 });
+    add(k, world, 'h', {}, it[0], 930, top + 110, { d: d + 0.08 });
+    add(k, world, greenFirst ? 'g' : 'm', {}, it[1], 930, top + 192, { d: d + 0.14 });
+    add(k, world, 'm', {}, it[2], 930, top + 255, { d: d + 0.18 });
+  });
+}
+const cardLine = i => { const top = 520 + i * 380; return [[930, top + 26], [150, top + 26]]; };
+// KPI: a big total, the carried line split in two (completed | on plan), two tiles, a zero line
+const KPI = { num: 690, lbl: 878, bar: 980, tile: 1080, note: 1440, L: 120, Rt: 960, gap: 10 };
+function kpi(k, total, lbl, done, plan, note) {
+  add(k, world, 'num', { fontSize: total > 99 ? '236px' : '262px', color: C.goldN }, '0', 540, KPI.num, { ax: 0.5, d: 0.05, count: total, kind: 'total' });
+  add(k, world, '', { fontSize: '46px', fontWeight: 700 }, lbl, 540, KPI.lbl, { ax: 0.5, d: 0.15 });
+  [[done, 'مكتملة', C.navy, '#eaf0f6', '#d6e1ec', 760], [plan, 'على المخطط', C.green, '#e7f3ed', '#cfe6da', 320]].forEach(([v, l, c, bg, bd, cx], j) => {
+    const d = 0.55 + 0.1 * j;
+    add(k, world, '', { width: '400px', height: '240px', background: bg, border: `2px solid ${bd}`, borderRadius: '26px' }, '', cx, KPI.tile + 120, { ax: 0.5, d, rise: 44 });
+    add(k, world, 'num', { fontSize: v > 99 ? '118px' : '132px', color: c }, '0', cx, KPI.tile + 100, { ax: 0.5, d: d + 0.06, count: v });
+    add(k, world, '', { fontSize: '38px', fontWeight: 700, color: '#2a2a2a' }, l, cx, KPI.tile + 192, { ax: 0.5, d: d + 0.1 });
+  });
+  add(k, world, '', { fontSize: '38px', fontWeight: 500, color: '#8b8680' }, note, 540, KPI.note, { ax: 0.5, d: 0.85 });
+}
+const kpiBar = (done, total) => { const w = KPI.Rt - KPI.L - KPI.gap, wd = w * done / total, h = 7;
+  return { done: [[KPI.Rt - h, KPI.bar], [KPI.Rt - wd + h, KPI.bar]], plan: [[KPI.Rt - wd - KPI.gap - h, KPI.bar], [KPI.L + h, KPI.bar]] }; };
+
+// 1 · opening (on black)
+add(0, dark, '', { fontSize: '112px', fontWeight: 700, color: '#fff' }, 'تقرير الإنجاز', 540, 840, { ax: 0.5, at: 0.75 });
+add(0, dark, '', { fontSize: '112px', fontWeight: 700, color: '#fff' }, 'الأسبوعي', 540, 975, { ax: 0.5, at: 0.92 });
+add(0, dark, 'num', { fontSize: '62px', color: C.gold, direction: 'rtl' }, '5 نوفمبر 2026', 540, 1170, { ax: 0.5, at: 1.75 });
+add(0, dark, '', { fontSize: '36px', fontWeight: 500, color: '#e9e2d8' }, 'أداء التنفيذ وأولويات المتابعة', 540, 1330, { ax: 0.5, at: 2.05 });
+// 2 · executive summary
+head(1, 'مؤشرات التنفيذ', 'ملخص الحالة حتى 5 نوفمبر 2026');
+['المهام', 'مشاريع سهيل', 'المعاملات'].forEach((n, i) => { const top = 520 + i * 230, d = 0.25 + 0.12 * i;
+  add(1, world, 'card', { width: '840px', height: '190px' }, '', 510, top + 95, { ax: 0.5, d, rise: 44 });
+  add(1, world, 'h', { fontSize: '48px' }, n, 880, top + 70, { d: d + 0.06 });
+  add(1, world, 'g', { fontSize: '34px' }, 'لا حالات متأخرة', 880, top + 135, { d: d + 0.12 });
+  add(1, world, '', { width: '64px', height: '96px', borderRadius: '16px', background: '#e7f3ed', border: '2px solid #cfe6da' },
+    '<svg width="64" height="96" viewBox="0 0 64 96"><path d="M18 48 L28 58 L46 38" fill="none" stroke="#038060" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>', 150, top + 95, { ax: 0.5, d: d + 0.16 });
+  add(1, world, '', { width: '22px', height: '22px', borderRadius: '50%', background: C.gold, boxShadow: '0 0 0 7px #faf6f2' }, '', 978, top + 95, { ax: 0.5, d: 0.55 + 0.1 * i, rise: 0 });
+});
+add(1, world, '', { width: '900px', height: '110px', borderRadius: '26px', background: '#f5e9d6', border: '2px solid #ead6b8', color: C.goldN, fontSize: '42px', fontWeight: 700, textAlign: 'center', lineHeight: '106px' },
+  'انضباط التنفيذ', 540, 1295, { ax: 0.5, d: 0.75, rise: 40 });
+const AXIS = [[978, 520], [978, 1180]];
+// 3 · tasks
+head(2, 'ملخص المهام'); kpi(2, 22, 'إجمالي المهام', 2, 20, 'صفر متأخرة أو معلقة');
+// 4 · achievements
+head(3, 'منجزات الأسبوع', 'المهمتان المكتملتان');
+lineCards(3, [['تنسيق الوفود الرسمية', 'الاستعداد لاستقبال الوفود', 'خلال مؤتمر الحج 2026'], ['التأشيرة الإلكترونية', 'الاتفاق مع الخارجية على دراسة', 'التحديات لمقيمي دول الخليج']], false);
+// 5 · Suhail
+head(4, 'مشاريع سهيل'); kpi(4, 19, 'إجمالي المشاريع', 6, 13, 'لا مشاريع متأخرة أو لم تبدأ');
+// 6 · project updates
+head(5, 'مستجدات المشاريع', 'خطوات تنفيذية تعزز الجاهزية');
+lineCards(5, [['ضيف بلا حقيبة', 'تعميم اتفاقية مستوى الخدمة', 'على مقدمي ومزودي الخدمة'], ['نسك امتثال', 'استكمال التقييم الفني والمالي', 'وإحالة النتائج لإجراءات الترسية']], true);
+// 7 · transactions
+head(6, 'المعاملات'); kpi(6, 708, 'إجمالي المعاملات', 402, 306, 'صفر متأخرة');
+// 8 · digital maturity — the four rings are the carried line
+head(7, 'نضج التجربة الرقمية', 'نسب تقدم إنجاز متطلبات المؤشر');
+const DIM = [['تجربة المستخدم', 54, C.ux], ['التعامل مع الشكاوى', 52, C.comp], ['التقنيات والأدوات', 46, C.tech], ['رضا المستفيد', 15, C.sat]];
+const RING = { r: 70, w: 16 }, ringTop = i => 500 + i * 265;
+DIM.forEach(([n, v, c], i) => { const top = ringTop(i), d = 0.2 + 0.12 * i;
+  add(7, world, 'card', { width: '880px', height: '225px' }, '', 540, top + 112, { ax: 0.5, d, rise: 44 });
+  add(7, world, 'h', { fontSize: '48px' }, n, 920, top + 112, { d: d + 0.08 });
+  add(7, world, '', {}, `<svg width="180" height="180" viewBox="-90 -90 180 180"><circle r="${RING.r}" fill="none" stroke="#ebe6df" stroke-width="${RING.w}"/></svg>`, 230, top + 112, { ax: 0.5, d: d + 0.05, rise: 0 });
+  add(7, world, 'num', { fontSize: '40px', color: c }, '0%', 230, top + 112, { ax: 0.5, d: 0.75 + 0.12 * i, count: v, suf: '%', rise: 0 });
+});
+// 9 · digital updates
+head(8, 'التجربة الرقمية', 'أبرز مسارات التطوير');
+lineCards(8, [['توحيد منظومة نسك', 'العمل على دمج المحتوى والخدمات', 'وتوحيد تجربة المستفيد'], ['جاهزية المتطلبات التقنية', 'استكمال المسارات الفنية', 'والأدوات الداعمة للتجربة الرقمية']], true);
+// 10 · follow-up priorities
+head(9, 'أولويات المتابعة', 'متطلبات مؤثرة على اكتمال المؤشر');
+[['ملكية محتوى نسك', 'اعتماد مالك محتوى موحد'], ['دليل استقبال الشكاوى', 'استكمال الدليل وتجهيزه للنشر'], ['قائمة الخدمات', 'استكمال القائمة واعتمادها']].forEach(([a, b], i) => {
+  const top = 500 + i * 300, d = 0.25 + 0.14 * i;
+  add(9, world, 'card', { width: '880px', height: '250px' }, '', 540, top + 125, { ax: 0.5, d, rise: 44 });
+  add(9, world, 'h', { fontSize: '48px' }, a, 905, top + 95, { d: d + 0.08 });
+  add(9, world, 'm', {}, b, 905, top + 172, { d: d + 0.14 });
+  add(9, world, 'num', { fontSize: '84px', color: C.goldN }, '0' + (i + 1), 200, top + 128, { ax: 0.5, d: d + 0.12 });
+});
+const prioBar = i => { const top = 500 + i * 300; return [[952, top + 48], [952, top + 202]]; };
+// 11 · closing (on black)
+add(10, dark, '', { fontSize: '100px', fontWeight: 700, color: '#fff' }, 'متابعة التنفيذ', 540, 860, { ax: 0.5, at: 79.45 });
+add(10, dark, '', { fontSize: '100px', fontWeight: 700, color: '#fff' }, 'ورفع الجاهزية', 540, 995, { ax: 0.5, at: 79.6 });
+add(10, dark, '', { fontSize: '92px', fontWeight: 700, color: C.gold }, 'لخدمة ضيوف الرحمن', 540, 1125, { ax: 0.5, at: 79.75 });
+add(10, dark, '', { fontSize: '42px', fontWeight: 700, color: '#fff' }, 'وزارة الحج والعمرة', 540, 1375, { ax: 0.5, at: 80.3 });
+
+// enter / exit times
+SP.forEach(s => {
+  if (s.at == null) s.at = S[s.k] + (s.k === 0 ? 0 : 0.35) + s.d;
+  s.out = s.k === 0 ? 3.35 + 0.05 * (s.y > 1000) : s.k === 10 ? null : S[s.k + 1] - 0.55 + 0.04 * clamp((s.y - 300) / 300, 0, 4);
+});
+
+// ───────────────────────── the carried line: 4 strands, each a polyline of M points ─────────────────────────
+const M = 40;
+const line = (a, b) => Array.from({ length: M }, (_, i) => [lerp(a[0], b[0], i / (M - 1)), lerp(a[1], b[1], i / (M - 1))]);
+const arc = (cx, cy, r, p) => Array.from({ length: M }, (_, i) => { const a = -Math.PI / 2 + 2 * Math.PI * p * i / (M - 1); return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
+const st = (pts, w = 8, col = C.gold) => ({ pts, w, col });
+const all = s => [s, s, s, s];
+const ROLE = {
+  dot: all(st(line([540, 1048], [540, 1048]), 8)),
+  under: all(st(line([760, 1048], [320, 1048]), 8)),
+  full1: all(st(line([1080, 1048], [0, 1048]), 6)),
+  axis: all(st(line(...AXIS), 6)),
+};
+const bars = (done, total) => { const b = kpiBar(done, total); return [st(line(...b.done), 14, C.navy), st(line(...b.plan), 14, C.green), st(line(...b.done), 14, C.navy), st(line(...b.plan), 14, C.green)]; };
+ROLE.bar3 = bars(2, 22); ROLE.bar5 = bars(6, 19); ROLE.bar7 = bars(402, 708);
+ROLE.tops = [st(line(...cardLine(0)), 8), st(line(...cardLine(0)), 8), st(line(...cardLine(1)), 8), st(line(...cardLine(1)), 8)];
+ROLE.rings = DIM.map(([n, v, c], i) => st(arc(230, ringTop(i) + 112, RING.r, v / 100), RING.w, c));
+ROLE.merge = all(st(line([930, 462], [150, 462]), 8));
+ROLE.prio = [0, 1, 2, 2].map(i => st(line(...prioBar(i)), 10));
+ROLE.full11 = all(st(line([1080, 1200], [0, 1200]), 6));
+ROLE.close = all(st(line([760, 1200], [320, 1200]), 8));
+// keys: [t, role, curve] — between two keys the strands morph; equal roles hold
+const KF = [[0, 'dot'], [1.3, 'dot'], [2.05, 'under', ease.expoOut], [3.45, 'under'], [3.95, 'full1', ease.cubicInOut], [4.35, 'full1'], [5.05, 'axis', ease.cubicInOut],
+  [8.7, 'axis'], [9.65, 'bar3'], [15.7, 'bar3'], [16.65, 'tops'], [23.7, 'tops'], [24.65, 'bar5'], [30.7, 'bar5'], [31.65, 'tops'],
+  [40.7, 'tops'], [41.65, 'bar7'], [47.7, 'bar7'], [48.75, 'rings'], [62.65, 'rings'], [63.1, 'merge', ease.expoIn], [63.2, 'merge'], [63.8, 'tops'],
+  [69.7, 'tops'], [70.65, 'prio'], [78.25, 'prio'], [78.8, 'full11'], [79.3, 'full11'], [79.9, 'close', ease.expoOut]];
+const TRANS = [4, 9, 16, 24, 31, 41, 48, 63, 70, 79];
+const hexRGB = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+const mix = (a, b, k) => { const A = hexRGB(a), B = hexRGB(b); return `rgb(${A.map((v, i) => Math.round(lerp(v, B[i], k))).join(',')})`; };
+function strandsAt(t) {
+  let i = 0; while (i < KF.length - 1 && KF[i + 1][0] <= t) i++;
+  const A = ROLE[KF[i][1]];
+  if (i === KF.length - 1 || KF[i][1] === KF[i + 1][1]) return A.map(s => ({ ...s, col0: s.col, k: 1, colB: s.col }));
+  const B = ROLE[KF[i + 1][1]], cv = KF[i + 1][2] || ease.cubicInOut, k = cv(seg(t, KF[i][0], KF[i + 1][0]));
+  return A.map((a, j) => { const b = B[j];
+    // a slight lag along the strand so a morph reads as travelling, not cross-fading
+    const pts = a.pts.map((p, n) => { const kk = clamp(k * 1.15 - 0.15 * (n / (M - 1))); const e = kk; return [lerp(p[0], b.pts[n][0], e), lerp(p[1], b.pts[n][1], e)]; });
+    return { pts, w: lerp(a.w, b.w, k), col: a.col === b.col ? a.col : mix(a.col, b.col, k) }; });
+}
+
+// ───────────────────────── camera ─────────────────────────
+const KEYS = [{ t: 0, x: 540, y: 1000, zoom: 1.22 }, { t: 0.4, x: 540, y: 1000, zoom: 1.22 }, { t: 3.2, x: 540, y: 960, zoom: 1, curve: ease.cubicInOut }];
+function camAt(t) { const c = OM.camera(t, KEYS, { W, H }); const q = v => Math.round(v * 16) / 16; return { x: q(c.x), y: q(c.y), zoom: Math.round(c.zoom * 2000) / 2000, rot: 0 }; }
+
+// ───────────────────────── grounds: Kiswa black with embroidered panel; the report's cream ─────────────────────────
+let KISWA;
+function makeKiswa() {
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+  const grd = g.createRadialGradient(540, 700, 80, 540, 900, 1300); grd.addColorStop(0, '#1b1611'); grd.addColorStop(0.6, '#0c0a08'); grd.addColorStop(1, '#040303');
+  g.fillStyle = grd; g.fillRect(0, 0, W, H);
+  // the woven ground: interlaced circles, very faint
+  g.strokeStyle = '#d9a86a'; g.lineWidth = 1.1; g.globalAlpha = 0.05;
+  for (let y = -60; y < H + 90; y += 78) for (let x = -60 + ((y / 78) % 2 ? 39 : 0); x < W + 90; x += 78) { g.beginPath(); g.arc(x, y, 45, 0, Math.PI * 2); g.stroke(); }
+  // the hizam band
+  g.globalAlpha = 0.42; g.lineWidth = 2;
+  [236, 248, 334, 346].forEach(y => { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); });
+  g.globalAlpha = 0.3;
+  for (let x = 0; x < W + 60; x += 54) { g.beginPath(); g.moveTo(x, 330); g.quadraticCurveTo(x + 27, 262, x + 54, 330); g.stroke(); g.beginPath(); g.arc(x + 27, 300, 8, 0, Math.PI * 2); g.stroke(); }
+  // the embroidered panel with an arcade of pointed arches
+  g.globalAlpha = 0.3; g.lineWidth = 2.2;
+  const P = { x: 250, y: 400, w: 580, h: 330 };
+  g.strokeRect(P.x, P.y, P.w, P.h); g.strokeRect(P.x + 16, P.y + 16, P.w - 32, P.h - 32);
+  g.globalAlpha = 0.22;
+  for (let x = P.x + 34; x < P.x + P.w - 40; x += 34) { g.beginPath(); g.arc(x + 17, P.y + 34, 9, 0, Math.PI * 2); g.stroke(); g.beginPath(); g.arc(x + 17, P.y + P.h - 34, 9, 0, Math.PI * 2); g.stroke(); }
+  g.globalAlpha = 0.3;
+  const n = 4, aw = (P.w - 120) / n;
+  for (let i = 0; i < n; i++) { const x0 = P.x + 60 + i * aw, x1 = x0 + aw - 18, xm = (x0 + x1) / 2, yb = P.y + P.h - 60, ys = P.y + 150, ya = P.y + 70;
+    for (const inset of [0, 12]) { g.beginPath(); g.moveTo(x0 + inset, yb); g.lineTo(x0 + inset, ys); g.bezierCurveTo(x0 + inset, ys - 50, xm - 10, ya + inset + 10, xm, ya + inset); g.bezierCurveTo(xm + 10, ya + inset + 10, x1 - inset, ys - 50, x1 - inset, ys); g.lineTo(x1 - inset, yb); g.stroke(); } }
+  // lamps either side
+  for (const x of [130, 950]) { g.beginPath(); g.ellipse(x, 560, 36, 60, 0, 0, Math.PI * 2); g.stroke(); g.beginPath(); g.ellipse(x, 560, 20, 38, 0, 0, Math.PI * 2); g.stroke(); g.beginPath(); g.moveTo(x, 470); g.lineTo(x, 500); g.stroke(); }
+  g.globalAlpha = 1;
+  // vertical fade so the type below sits on plain black
+  const f = g.createLinearGradient(0, 760, 0, 900); f.addColorStop(0, 'rgba(8,7,6,0)'); f.addColorStop(1, 'rgba(8,7,6,.85)'); g.fillStyle = f; g.fillRect(0, 760, W, 1160);
+  KISWA = c;
+}
+function groundDark(V, t) {
+  const g = $('gDark').getContext('2d'); g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = '#060504'; g.fillRect(0, 0, W, H);
+  g.setTransform(...V); g.globalAlpha = sstep(0, 1.0, t); g.drawImage(KISWA, 0, 0); g.globalAlpha = 1;
+}
+let LIGHT;
+function makeLight() {
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+  g.fillStyle = '#faf6f2'; g.fillRect(0, 0, W, H);
+  g.strokeStyle = '#c49a62'; g.lineWidth = 1; g.globalAlpha = 0.06;
+  for (let y = -60; y < H + 90; y += 78) for (let x = -60 + ((y / 78) % 2 ? 39 : 0); x < W + 90; x += 78) { g.beginPath(); g.arc(x, y, 45, 0, Math.PI * 2); g.stroke(); }
+  g.globalAlpha = 1;
+  const v = g.createRadialGradient(540, 900, 600, 540, 960, 1350); v.addColorStop(0, 'rgba(250,246,242,0)'); v.addColorStop(1, 'rgba(238,228,214,.6)'); g.fillStyle = v; g.fillRect(0, 0, W, H);
+  LIGHT = c;
+}
+
+// ───────────────────────── draw ─────────────────────────
+function place(el, x, y, { s = 1, op = 1, ax = 0.5, ay = 0.5 } = {}) {
+  if (op <= 0.001) { if (el.style.display !== 'none') el.style.display = 'none'; return; }
+  if (el.style.display === 'none') el.style.display = '';
+  const w = el._w ?? (el._w = el.offsetWidth), h = el._h ?? (el._h = el.offsetHeight);
+  el.style.opacity = op.toFixed(4);
+  el.style.transform = `translate(${(x - w * ax).toFixed(2)}px,${(y - h * ay).toFixed(2)}px) scale(${s.toFixed(4)})`;
+}
+const mat = (el, M_) => { el.style.transform = `matrix(${M_.map(v => v.toFixed(5)).join(',')})`; };
+const NS = 'http://www.w3.org/2000/svg';
+const SEL = [0, 1, 2, 3].map(() => { const p = document.createElementNS(NS, 'path'); p.setAttribute('fill', 'none'); p.setAttribute('stroke-linecap', 'round'); p.setAttribute('stroke-linejoin', 'round'); $('strands').appendChild(p); return p; });
+let TRACK = {};
+
+function slit(t) {           // the cream band: centre y and half-height (screen space)
+  if (t < OPEN[0]) return { yc: 1048, hh: 0 };
+  if (t < CLOSE[0]) return { yc: 1048, hh: 1150 * ease.cubicInOut(seg(t, ...OPEN)) };
+  return { yc: 1200, hh: 1250 * (1 - ease.cubicInOut(seg(t, ...CLOSE))) };
+}
+
+function render(t) {
+  const cam = camAt(t), V = OM.view(cam, { W, H });
+  groundDark(V, t);
+  mat(dark, V); mat(world, V); mat($('top'), V);
+  // cream page
+  const sl = slit(t), cr = $('cream');
+  if (sl.hh < 0.5) cr.style.display = 'none';
+  else { cr.style.display = ''; const y0 = Math.max(0, sl.yc - sl.hh), y1 = Math.min(H, sl.yc + sl.hh);
+    cr.style.clipPath = (y0 <= 0 && y1 >= H) ? 'none' : `inset(${y0.toFixed(1)}px 0 ${(H - y1).toFixed(1)}px 0)`;
+    const g = $('gLight').getContext('2d'); g.setTransform(1, 0, 0, 1, 0, 0); g.drawImage(LIGHT, 0, 0); }
+  // content
+  for (const s of SP) {
+    if (t < s.at - 0.05 || (s.out != null && t > s.out + 0.5)) { place(s.el, 0, 0, { op: 0 }); continue; }
+    const p = OM.popIn(t, s.at, { rise: s.rise }), q = s.out != null ? OM.liftOut(t, s.out, { dur: 0.32, dist: 46 }) : { op: 1, dy: 0, s: 1 };
+    if (s.count != null) { const v = Math.round(s.count * ease.expoOut(seg(t, s.at, s.at + (s.kind === 'total' ? 1.3 : 1.0)))); const txt = v + (s.suf || '');
+      if (s.el.textContent !== txt) { s.el.textContent = txt; s.el._w = undefined; } }
+    place(s.el, s.x, s.y + p.dy + q.dy, { op: (t < s.at ? 0 : p.op) * q.op, s: p.s * q.s, ax: s.ax, ay: s.ay });
+  }
+  // the line
+  const L = strandsAt(t); let bx0 = 1e9, by0 = 1e9, bx1 = -1e9, by1 = -1e9;
+  const vis = t >= 1.3;
+  L.forEach((s, j) => { const el = SEL[j];
+    let len = 0; for (let n = 1; n < M; n++) len += Math.hypot(s.pts[n][0] - s.pts[n - 1][0], s.pts[n][1] - s.pts[n - 1][1]);
+    if (!vis || len < 0.5) { el.style.display = 'none'; return; } el.style.display = '';
+    el.setAttribute('d', 'M' + s.pts.map(p => p[0].toFixed(2) + ' ' + p[1].toFixed(2)).join('L'));
+    el.setAttribute('stroke', s.col); el.setAttribute('stroke-width', s.w.toFixed(2));
+    s.pts.forEach(p => { bx0 = Math.min(bx0, p[0]); by0 = Math.min(by0, p[1]); bx1 = Math.max(bx1, p[0]); by1 = Math.max(by1, p[1]); });
+  });
+  // HUD: header (white on black, ink on cream), progress
+  const onCream = sl.yc - sl.hh < 110 && sl.hh > 0;
+  const hk = t < CLOSE[0] ? ssstep(OPEN[0] + 0.45, OPEN[1], t) : 1 - ssstep(CLOSE[0], CLOSE[1] - 0.2, t);
+  $('hdr').style.color = mix('#ffffff', '#1b1b1b', clamp(hk));
+  const hIn = OM.popIn(t, 0.35, { rise: 20 });
+  place($('hdr'), 1000, 108 + hIn.dy, { op: t < 0.35 ? 0 : hIn.op, ax: 1 });
+  const rk = ease.expoOut(seg(t, 0.5, 1.4)); $('hrule').style.transformOrigin = '100% 50%';
+  place($('hrule'), 540, 162, { op: rk > 0 ? 1 : 0 }); $('hrule').style.transform += ` scaleX(${Math.max(rk, 0.001).toFixed(4)})`;
+  $('ptrack').style.background = mix('#3a332b', '#e6dfd6', clamp(hk));
+  let frac = 1 / 11; TRANS.forEach((b, i) => { frac += (1 / 11) * ease.cubicInOut(seg(t, b - 0.2, b + 0.7)); });
+  place($('ptrack'), 540, 1810, { op: sstep(0.6, 1.2, t) });
+  $('pfill').style.width = px(920 * frac); $('pfill')._w = undefined;
+  place($('pfill'), 1000, 1810, { op: sstep(0.6, 1.2, t), ax: 1 });
+  TRACK = { line: vis && bx1 > bx0 - 1 ? OM.projectBox(V, { x: bx0 - 4, y: by0 - 4, w: bx1 - bx0 + 8, h: by1 - by0 + 8 }) : null, cam, L, slit: sl };
+}
+
+// ───────────────────────── contract ─────────────────────────
+let CUR = -1;
+async function seek(t) { t = clamp(t, 0, DUR); render(t); CUR = t; return true; }
+window.__seek = seek;
+window.__meta = { dur: DUR, fps: 30, inFrame: {} };
+window.__motion = (t0, t1) => {
+  render(t0); const A = TRACK; render(t1); const B = TRACK; const Mid = (render((t0 + t1) / 2), TRACK);
+  let d = OM.screenTravel(A.cam, B.cam, Mid.cam, { W, H });
+  A.L.forEach((s, j) => s.pts.forEach((p, n) => { const q = B.L[j].pts[n]; d = Math.max(d, Math.hypot(p[0] - q[0], p[1] - q[1])); }));
+  d = Math.max(d, Math.abs(A.slit.hh - B.slit.hh));
+  // entering / leaving content
+  for (const s of SP) { const a = OM.popIn(t0, s.at, { rise: s.rise }).dy, b = OM.popIn(t1, s.at, { rise: s.rise }).dy; if (t1 > s.at && t0 < s.at + 1) d = Math.max(d, Math.abs(a - b));
+    if (s.out != null && t1 > s.out && t0 < s.out + 0.35) d = Math.max(d, Math.abs(OM.liftOut(t0, s.out, { dur: 0.32, dist: 46 }).dy - OM.liftOut(t1, s.out, { dur: 0.32, dist: 46 }).dy)); }
+  if (CUR >= 0) render(CUR);
+  return d;
+};
+// sound only at the transitions between scenes
+window.__events = () => [['open', OPEN[0], 0], ...TRANS.slice(1, -1).map((b, i) => ['move', b - 0.3, i + 1]), ['close', CLOSE[0], 9]];
+window.__ready = document.fonts.ready.then(() => { makeKiswa(); makeLight(); return seek(0); });
+
+window.__ready.then(() => {
+  if (Q.has('t')) seek(parseFloat(Q.get('t')));
+  if (Q.has('play')) { const t0 = performance.now(); const loop = () => { seek(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); }; loop(); }
+});
+</script>
+</body>
+</html>
