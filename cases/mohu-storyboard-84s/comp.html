@@ -39,7 +39,7 @@ canvas.L{display:block}
   </svg>
 </div>
 <div id="hud" class="L">
-  <div id="hdr" class="a" style="width:366px;height:81px"><img id="lgL" src="logo_light.png" style="position:absolute;left:0;top:0;width:366px;height:81px"><img id="lgD" src="logo_dark.png" style="position:absolute;left:0;top:0;width:366px;height:81px;opacity:0"></div>
+  <div id="hdr" class="a" style="width:366px;height:81px"><img id="lgL" src="logo_light.png" style="position:absolute;left:0;top:0;width:366px;height:auto"><img id="lgD" src="logo_dark.png" style="position:absolute;left:0;top:0;width:366px;height:81px;opacity:0"></div>
   <div id="hrule" class="a" style="width:920px;height:3px;background:var(--gold)"></div>
   <div id="ptrack" class="a" style="width:920px;height:7px;border-radius:4px"></div>
   <div id="pfill" class="a" style="height:7px;border-radius:4px;background:var(--gold)"></div>
@@ -170,7 +170,7 @@ const prioBar = i => { const top = 500 + i * 300; return [[952, top + 48], [952,
 add(10, dark, '', { fontSize: '100px', fontWeight: 700, color: '#fff' }, 'متابعة التنفيذ', 540, 860, { ax: 0.5, at: 79.45 });
 add(10, dark, '', { fontSize: '100px', fontWeight: 700, color: '#fff' }, 'ورفع الجاهزية', 540, 995, { ax: 0.5, at: 79.6 });
 add(10, dark, '', { fontSize: '92px', fontWeight: 700, color: C.gold }, 'لخدمة ضيوف الرحمن', 540, 1125, { ax: 0.5, at: 79.75 });
-add(10, dark, '', { width: '520px', height: '115px' }, '<img src="logo_light.png" style="width:520px;height:115px;display:block">', 540, 1390, { ax: 0.5, at: 80.3 });
+add(10, dark, '', { width: '520px', height: '115px' }, '<img src="logo_light.png" style="width:520px;height:auto;display:block">', 540, 1390, { ax: 0.5, at: 80.3 });
 
 // enter / exit times
 SP.forEach(s => {
