@@ -118,7 +118,24 @@ const AXIS = [[978, 520], [978, 1180]];
 head(2, 'ملخص المهام'); kpi(2, 22, 'إجمالي المهام', 2, 20, 'صفر متأخرة أو معلقة');
 // 4 · achievements
 head(3, 'منجزات الأسبوع', 'المهمتان المكتملتان');
-lineCards(3, [['تنسيق الوفود الرسمية', 'الاستعداد لاستقبال الوفود', 'خلال مؤتمر الحج 2026'], ['التأشيرة الإلكترونية', 'الاتفاق مع الخارجية على دراسة', 'التحديات لمقيمي دول الخليج']], false);
+// the full text of the two completed tasks, from the report (page 2: المهام المكتملة)
+const ACH = [
+  ['تنسيق زيارات الوفود الرسمية', 'وكالة التحول الرقمي وتقنية المعلومات',
+   'التنسيق مع وكالة التعاون الدولي لمتابعة وتنظيم زيارات كبار الشخصيات والوفود الرسمية خلال مؤتمر ومعرض الحج 2026، وإعداد الترتيبات اللازمة لاستقبالهم في بوث وكالة التحول الرقمي وتقنية المعلومات',
+   'تم التنسيق مع وكالة التعاون الدولي'],
+  ['التأشيرة الإلكترونية لمقيمي دول الخليج', 'وكالة التعاون الدولي والشراكات',
+   'عقد اجتماع مع وكيل وزارة الخارجية للشؤون القنصلية لمناقشة التحديات بخصوص إعادة تفعيل التأشيرة الإلكترونية لمقيمي دول الخليج وبحث سبل معالجتها',
+   'تم التواصل مع وكيل وزارة الخارجية للشؤون القنصلية، والاتفاق على دراسة الموضوع من قبل الفرق المختصة ومتابعته، وموافاتنا بالمستجدات'],
+];
+const ACH_TOP = i => 470 + i * 625, ACH_H = 595;
+ACH.forEach(([ttl, sec, body, note], i) => { const top = ACH_TOP(i), d = 0.2 + 0.16 * i;
+  add(3, world, 'card', { width: '900px', height: ACH_H + 'px' }, '', 540, top + ACH_H / 2, { ax: 0.5, d, rise: 50 });
+  add(3, world, '', { fontSize: '27px', fontWeight: 700, color: C.goldN, background: '#f5e9d6', border: '2px solid #ead6b8', borderRadius: '30px', padding: '6px 22px' }, sec, 935, top + 82, { d: d + 0.06 });
+  add(3, world, 'h', { fontSize: '44px' }, ttl, 935, top + 152, { d: d + 0.1 });
+  add(3, world, '', { width: '810px', whiteSpace: 'normal', textAlign: 'right', fontSize: '33px', lineHeight: '1.6', color: '#3a3733' }, body, 935, top + 205, { ay: 0, d: d + 0.16 });
+  add(3, world, '', { width: '780px', whiteSpace: 'normal', textAlign: 'right', fontSize: '30px', lineHeight: '1.55', fontWeight: 500, color: C.green, background: '#eef6f1', borderRadius: '18px', padding: '16px 26px 16px 26px' },
+    '<b style="font-weight:700">✓ </b>' + note, 540, top + ACH_H - 30, { ax: 0.5, ay: 1, d: d + 0.24 });
+});
 // 5 · Suhail
 head(4, 'مشاريع سهيل'); kpi(4, 19, 'إجمالي المشاريع', 6, 13, 'لا مشاريع متأخرة أو لم تبدأ');
 // 6 · project updates
@@ -175,6 +192,7 @@ const ROLE = {
 };
 const bars = (done, total) => { const b = kpiBar(done, total); return [st(line(...b.done), 14, C.navy), st(line(...b.plan), 14, C.green), st(line(...b.done), 14, C.navy), st(line(...b.plan), 14, C.green)]; };
 ROLE.bar3 = bars(2, 22); ROLE.bar5 = bars(6, 19); ROLE.bar7 = bars(402, 708);
+ROLE.tops4 = [0, 0, 1, 1].map(i => st(line([945, ACH_TOP(i) + 26], [135, ACH_TOP(i) + 26]), 8));
 ROLE.tops = [st(line(...cardLine(0)), 8), st(line(...cardLine(0)), 8), st(line(...cardLine(1)), 8), st(line(...cardLine(1)), 8)];
 ROLE.rings = DIM.map(([n, v, c], i) => st(arc(230, ringTop(i) + 112, RING.r, v / 100), RING.w, c));
 ROLE.merge = all(st(line([930, 462], [150, 462]), 8));
@@ -183,7 +201,7 @@ ROLE.full11 = all(st(line([1080, 1200], [0, 1200]), 6));
 ROLE.close = all(st(line([760, 1200], [320, 1200]), 8));
 // keys: [t, role, curve] — between two keys the strands morph; equal roles hold
 const KF = [[0, 'dot'], [1.3, 'dot'], [2.05, 'under', ease.expoOut], [3.45, 'under'], [3.95, 'full1', ease.cubicInOut], [4.35, 'full1'], [5.05, 'axis', ease.cubicInOut],
-  [8.7, 'axis'], [9.65, 'bar3'], [15.7, 'bar3'], [16.65, 'tops'], [23.7, 'tops'], [24.65, 'bar5'], [30.7, 'bar5'], [31.65, 'tops'],
+  [8.7, 'axis'], [9.65, 'bar3'], [15.7, 'bar3'], [16.65, 'tops4'], [23.7, 'tops4'], [24.65, 'bar5'], [30.7, 'bar5'], [31.65, 'tops'],
   [40.7, 'tops'], [41.65, 'bar7'], [47.7, 'bar7'], [48.75, 'rings'], [62.65, 'rings'], [63.1, 'merge', ease.expoIn], [63.2, 'merge'], [63.8, 'tops'],
   [69.7, 'tops'], [70.65, 'prio'], [78.25, 'prio'], [78.8, 'full11'], [79.3, 'full11'], [79.9, 'close', ease.expoOut]];
 const TRANS = [4, 9, 16, 24, 31, 41, 48, 63, 70, 79];
@@ -206,38 +224,22 @@ function camAt(t) { const c = OM.camera(t, KEYS, { W, H }); const q = v => Math.
 
 // ───────────────────────── grounds: Kiswa black with embroidered panel; the report's cream ─────────────────────────
 let KISWA;
-function makeKiswa() {
+const KIMG = new Image(); KIMG.src = 'kaaba.jpg';
+const KLOAD = new Promise(r => { KIMG.onload = r; KIMG.onerror = r; });
+function makeKiswa() {   // the report's cover photograph: the Kiswa and the door, darkened, fading to black under the type
   const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
-  const grd = g.createRadialGradient(540, 700, 80, 540, 900, 1300); grd.addColorStop(0, '#1b1611'); grd.addColorStop(0.6, '#0c0a08'); grd.addColorStop(1, '#040303');
-  g.fillStyle = grd; g.fillRect(0, 0, W, H);
-  // the woven ground: interlaced circles, very faint
-  g.strokeStyle = '#d9a86a'; g.lineWidth = 1.1; g.globalAlpha = 0.05;
-  for (let y = -60; y < H + 90; y += 78) for (let x = -60 + ((y / 78) % 2 ? 39 : 0); x < W + 90; x += 78) { g.beginPath(); g.arc(x, y, 45, 0, Math.PI * 2); g.stroke(); }
-  // the hizam band
-  g.globalAlpha = 0.42; g.lineWidth = 2;
-  [236, 248, 334, 346].forEach(y => { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); });
-  g.globalAlpha = 0.3;
-  for (let x = 0; x < W + 60; x += 54) { g.beginPath(); g.moveTo(x, 330); g.quadraticCurveTo(x + 27, 262, x + 54, 330); g.stroke(); g.beginPath(); g.arc(x + 27, 300, 8, 0, Math.PI * 2); g.stroke(); }
-  // the embroidered panel with an arcade of pointed arches
-  g.globalAlpha = 0.3; g.lineWidth = 2.2;
-  const P = { x: 250, y: 400, w: 580, h: 330 };
-  g.strokeRect(P.x, P.y, P.w, P.h); g.strokeRect(P.x + 16, P.y + 16, P.w - 32, P.h - 32);
-  g.globalAlpha = 0.22;
-  for (let x = P.x + 34; x < P.x + P.w - 40; x += 34) { g.beginPath(); g.arc(x + 17, P.y + 34, 9, 0, Math.PI * 2); g.stroke(); g.beginPath(); g.arc(x + 17, P.y + P.h - 34, 9, 0, Math.PI * 2); g.stroke(); }
-  g.globalAlpha = 0.3;
-  const n = 4, aw = (P.w - 120) / n;
-  for (let i = 0; i < n; i++) { const x0 = P.x + 60 + i * aw, x1 = x0 + aw - 18, xm = (x0 + x1) / 2, yb = P.y + P.h - 60, ys = P.y + 150, ya = P.y + 70;
-    for (const inset of [0, 12]) { g.beginPath(); g.moveTo(x0 + inset, yb); g.lineTo(x0 + inset, ys); g.bezierCurveTo(x0 + inset, ys - 50, xm - 10, ya + inset + 10, xm, ya + inset); g.bezierCurveTo(xm + 10, ya + inset + 10, x1 - inset, ys - 50, x1 - inset, ys); g.lineTo(x1 - inset, yb); g.stroke(); } }
-  // lamps either side
-  for (const x of [130, 950]) { g.beginPath(); g.ellipse(x, 560, 36, 60, 0, 0, Math.PI * 2); g.stroke(); g.beginPath(); g.ellipse(x, 560, 20, 38, 0, 0, Math.PI * 2); g.stroke(); g.beginPath(); g.moveTo(x, 470); g.lineTo(x, 500); g.stroke(); }
-  g.globalAlpha = 1;
-  // vertical fade so the type below sits on plain black
-  const f = g.createLinearGradient(0, 760, 0, 900); f.addColorStop(0, 'rgba(8,7,6,0)'); f.addColorStop(1, 'rgba(8,7,6,.85)'); g.fillStyle = f; g.fillRect(0, 760, W, 1160);
+  g.fillStyle = '#070605'; g.fillRect(0, 0, W, H);
+  g.drawImage(KIMG, 0, -70, 1080, 1620);
+  g.fillStyle = 'rgba(6,5,4,.42)'; g.fillRect(0, 0, W, H);
+  const top = g.createLinearGradient(0, 0, 0, 260); top.addColorStop(0, 'rgba(6,5,4,.85)'); top.addColorStop(1, 'rgba(6,5,4,0)'); g.fillStyle = top; g.fillRect(0, 0, W, 260);
+  const f = g.createLinearGradient(0, 560, 0, 980); f.addColorStop(0, 'rgba(7,6,5,0)'); f.addColorStop(1, 'rgba(7,6,5,1)'); g.fillStyle = f; g.fillRect(0, 560, W, 420);
+  g.fillStyle = '#070605'; g.fillRect(0, 980, W, H - 980);
   KISWA = c;
 }
 function groundDark(V, t) {
   const g = $('gDark').getContext('2d'); g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = '#060504'; g.fillRect(0, 0, W, H);
-  g.setTransform(...V); g.globalAlpha = sstep(0, 1.0, t); g.drawImage(KISWA, 0, 0); g.globalAlpha = 1;
+  const kb = t < 40 ? 1.06 - 0.06 * ease.cubicOut(seg(t, 0, 4.2)) : 1 + 0.035 * seg(t, 79, 84);   // a slow breath on the photograph
+  g.setTransform(...V); g.transform(kb, 0, 0, kb, 540 * (1 - kb), 600 * (1 - kb)); g.globalAlpha = sstep(0, 1.0, t); g.drawImage(KISWA, 0, 0); g.globalAlpha = 1;
 }
 let LIGHT;
 function makeLight() {
@@ -331,7 +333,7 @@ window.__motion = (t0, t1) => {
 };
 // sound only at the transitions between scenes
 window.__events = () => [['open', OPEN[0], 0], ...TRANS.slice(1, -1).map((b, i) => ['move', b - 0.3, i + 1]), ['close', CLOSE[0], 9]];
-window.__ready = document.fonts.ready.then(() => { makeKiswa(); makeLight(); return seek(0); });
+window.__ready = Promise.all([document.fonts.ready, KLOAD]).then(() => { makeKiswa(); makeLight(); return seek(0); });
 
 window.__ready.then(() => {
   if (Q.has('t')) seek(parseFloat(Q.get('t')));

@@ -2,7 +2,7 @@
 
 The executive storyboard for the weekly achievement report (5 November 2026), built shot for shot: 11 scenes,
 84 seconds, 9:16, the report's colours. Following the storyboard there is **no decorative star** and **no voice-over**.
-Sound plays only at the scene transitions.
+Sound is only a swipe at each scene transition, with no bells.
 
 **Concept: one gold line carries the film.** It underlines the report title. It widens, and the cream page opens from it.
 It becomes the status axis beside the three tracks, then splits into the two task numbers (completed in navy, on
@@ -29,10 +29,10 @@ The accuracy rules in the storyboard are kept. The percentages are labelled only
 maturity-index requirements. The visa item reads as an agreement to study, and the Nusuk unification reads as work
 in progress. The main tracks show no delays.
 
-The Kiswa panel is drawn as gold line-work (an arcade, a band and lamps) rather than a photograph.
+The opening and the closing use the report's cover photograph (`kaaba.jpg`: the Kiswa and the door), darkened and faded to black under the type. Scene 04 carries the full text of the two completed tasks from page 2 of the report: the task, the sector and the note.
 
 Files: `comp.html` (`?play`, `?t=12.3`), `motion.js`, `faces.css` (IBM Plex Sans Arabic, OFL), and `score.py` → `sfx.wav`,
-which places sound at the transitions only. The video is `mohu-storyboard.mp4`, a 30 fps draft with shutter motion blur.
+which places swipes at the transitions only. `kaaba.jpg` is the report's cover photograph. The video is `mohu-storyboard.mp4`, a 30 fps draft with shutter motion blur.
 
 ```bash
 python3 scripts/render.py cases/mohu-storyboard-84s/comp.html --out cases/mohu-storyboard-84s/mohu-storyboard.mp4 \
